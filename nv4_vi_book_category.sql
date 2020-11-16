@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2020 lúc 04:40 AM
+-- Thời gian đã tạo: Th10 16, 2020 lúc 12:03 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.2.34
 
@@ -30,12 +30,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `nv4_vi_book_category` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Tên danh mục sản phẩm',
-  `status` tinyint(1) DEFAULT 1 COMMENT 'Hiển thị',
-  `slug` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `weight` int(10) DEFAULT 1,
-  `active` tinyint(4) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `slug` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'alias_category',
+  `weight` int(10) DEFAULT 1 COMMENT 'sắp xếp ',
+  `active` tinyint(4) DEFAULT 1 COMMENT 'Hiển thị 0 ẩn, 1 hiển thị',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Thời gian tạo',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Thời gian cập nhật'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -46,7 +45,10 @@ CREATE TABLE `nv4_vi_book_category` (
 -- Chỉ mục cho bảng `nv4_vi_book_category`
 --
 ALTER TABLE `nv4_vi_book_category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `slug` (`slug`),
+  ADD UNIQUE KEY `active` (`active`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ

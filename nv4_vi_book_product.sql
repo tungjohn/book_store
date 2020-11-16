@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2020 lúc 04:41 AM
+-- Thời gian đã tạo: Th10 16, 2020 lúc 12:04 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.2.34
 
@@ -34,13 +34,12 @@ CREATE TABLE `nv4_vi_book_product` (
   `price` float NOT NULL COMMENT 'giá sản phẩm',
   `sale_price` float DEFAULT 0 COMMENT 'Giá sản phẩm khuyến mãi',
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Nôi dung sản phẩm',
-  `slug` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `slug` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'alias_product',
   `category_id` int(11) NOT NULL COMMENT 'id danh mục',
-  `status` tinyint(1) DEFAULT 1 COMMENT 'Hiển thị',
-  `weight` int(10) DEFAULT 1,
-  `active` tinyint(4) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `weight` int(10) DEFAULT 1 COMMENT 'sắp xếp',
+  `active` tinyint(4) DEFAULT 1 COMMENT 'Hiển thị 0 ẩn 1 hiển thị',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'thời gian tao ',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Cập nhật thời gian'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -51,7 +50,10 @@ CREATE TABLE `nv4_vi_book_product` (
 -- Chỉ mục cho bảng `nv4_vi_book_product`
 --
 ALTER TABLE `nv4_vi_book_product`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD UNIQUE KEY `weight` (`weight`);
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ

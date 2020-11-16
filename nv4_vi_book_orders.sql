@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 16, 2020 lúc 04:40 AM
+-- Thời gian đã tạo: Th10 16, 2020 lúc 12:03 PM
 -- Phiên bản máy phục vụ: 10.4.14-MariaDB
 -- Phiên bản PHP: 7.2.34
 
@@ -36,11 +36,10 @@ CREATE TABLE `nv4_vi_book_orders` (
   `total_price` float NOT NULL COMMENT 'Tổng bill',
   `order_note` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'Lưu ý đơn hàng',
   `payment_method` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Phương thức thanh toán',
-  `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT 'Hiển thị',
-  `weight` int(10) DEFAULT 1,
-  `active` tinyint(4) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `weight` int(10) DEFAULT 1 COMMENT 'Vị trí sắp xếp\r\n',
+  `active` tinyint(4) DEFAULT 1 COMMENT 'Hiển thị 0 chưa giao hàng, 1 đã giao hàng',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Thời gian tạo',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT 'Thời gian cập nhật'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
