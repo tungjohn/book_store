@@ -22,7 +22,7 @@ $db_config['dbtype'] = 'mysql';
 $db_config['collation'] = 'utf8mb4_unicode_ci';
 $db_config['charset'] = 'utf8mb4';
 $db_config['persistent'] = false;
-$db_config['prefix'] = 'nukeviet';
+$db_config['prefix'] = 'nv4';
 
 $global_config['site_domain'] = '';
 $global_config['name_show'] = 0;
