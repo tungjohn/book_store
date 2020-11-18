@@ -47,8 +47,8 @@ CREATE TABLE `nv4_vi_book_category` (
 ALTER TABLE `nv4_vi_book_category`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`),
-  ADD UNIQUE KEY `slug` (`slug`),
-  ADD UNIQUE KEY `active` (`active`);
+  ADD UNIQUE KEY `slug` (`slug`);
+  
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ
