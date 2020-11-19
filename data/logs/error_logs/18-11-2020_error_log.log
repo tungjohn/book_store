@@ -1,0 +1,2 @@
+[Wed, 18 Nov 2020 11:09:12 +0700] [localhost] [::1] [User Notice(1024): SQLSTATE[HY000] [1049] Unknown database 'bookstore'] [FILE: /vendor/vinades/nukeviet/Core/Database.php] [LINE: 85]
+[Wed, 18 Nov 2020 11:10:01 +0700] [localhost] [::1] [User Notice(1024): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1' for key 'PRIMARY'] [FILE: /install/index.php] [LINE: 876]
