@@ -13,8 +13,8 @@ if (!defined('NV_MAINFILE')) {
 }
 
 $module_version = [
-    'name' => 'Album',
-    'modfuncs' => 'main,detail,search',
+    'name' => 'Category',
+    'modfuncs' => 'main,detail,search,',
     'change_alias' => 'main,detail,search',
     'submenu' => 'main,detail,search',
     'is_sysmod' => 0,
