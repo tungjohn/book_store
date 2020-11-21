@@ -16,3 +16,4 @@ $submenu['config'] = $lang_module['config'];
 $submenu['main'] = $lang_module['main'];
 $submenu['add'] = $lang_module['add'];
 $submenu['list'] = $lang_module['list'];
+?>
