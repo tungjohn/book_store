@@ -17,6 +17,18 @@ $key_words = $module_info['keywords'];
 
 $array_data = [];
 
+$db->sqlreset()
+->select('*')
+->from('nv4_vi_book_category')
+->order("id ASC");
+$sql = $db->sql();
+
+$result= $db->query($sql);
+while ($row = $result->fetch()) {
+    $array_data[$row['id']] = $row;
+}
+
+
 //------------------
 // Viết code vào đây
 //------------------
