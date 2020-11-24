@@ -21,3 +21,19 @@ $lang_translator['langtype'] = 'lang_module';
 $lang_module['main'] = 'Trang chính';
 $lang_module['config'] = 'Cấu hình';
 $lang_module['save'] = 'Lưu lại';
+$lang_module['add'] = 'Thêm';
+$lang_module['List'] = 'Thể loại sách';
+
+$lang_module['error_name'] = 'Chưa nhập tên';
+$lang_module['error'] = 'Thêm không thành công';
+
+
+$lang_module['name'] = 'Name';
+$lang_module['status'] = 'Status';
+$lang_module['stt'] = 'STT';
+$lang_module['name'] = 'Thể loại';
+$lang_module['status'] = 'Trạng thái';
+$lang_module['active'] = 'Chức năng';
+$lang_module['succ_I'] = 'Thêm thành công';
+$lang_module['succ_U'] = 'Cập nhật thành công';
+$lang_module['error'] = 'Không thêm được';

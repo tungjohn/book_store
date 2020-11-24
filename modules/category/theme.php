@@ -26,9 +26,20 @@ function nv_theme_album_main($array_data)
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
 
-    //------------------
-    // Viết code vào đây
-    //------------------
+    $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    
+    if (!empty($array_data)) {
+        $i = 1;
+        foreach ($array_data as $row){
+            $row['stt'] = $i;
+            //             $row['active'] = !empty($array_active[$row['active']]) ? $array_active[$row['active']] : '';
+            $xtpl->assign('ROW', $row);
+            $xtpl->parse('main.loop');
+            $i++;
+        }
+    }
 
     $xtpl->parse('main');
     return $xtpl->text('main');
@@ -44,9 +55,7 @@ function nv_theme_album_detail($array_data)
 {
     global $module_info, $lang_module, $lang_global, $op;
 
-    $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    
 
     //------------------
     // Viết code vào đây
