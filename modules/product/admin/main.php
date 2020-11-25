@@ -29,47 +29,177 @@ $post['submit'] = $nv_Request->get_title('submit', 'post', '');
 $post['name'] = check_input($nv_Request->get_title('name', 'post', ''));
 $post['price'] = $nv_Request->get_int('price', 'post', 0);
 $post['slug'] = check_input($nv_Request->get_title('slug', 'post', ''));
-$post['category'] = $nv_Request->get_int('category', 'post', 0);
+$post['category_id'] = $nv_Request->get_int('category_id', 'post', 0);
 $post['content'] = check_input($nv_Request->get_title('content', 'post', ''));
+$post['id'] = $nv_Request->get_int('id', 'post, get', 0);
+$post['action'] = $nv_Request->get_title('action', 'get', '');
 
+/* EDIT PRODUCT */
+        //lấy dữ liệu trong database in ra form sửa
+        try {
+            if (!empty($post['action']) && $post['action'] == 'edit' && $post['id']>0)
+            {
+                $sql = "SELECT * FROM `nv4_vi_book_product` WHERE id =" . $post['id'];
+                $post = $db->query($sql)->fetch();
+                if (!empty($post['image'])) {
+                    $post['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/'. $module_name . '/' . $post['image'];
+                }
+                
+            }
+        } catch (PDOException $e) {
+            echo "<pre>";
+            print_r($e);
+            echo "</pre>";
+        }
+        
+/* END EDIT PRODUCT */
 if(!empty($post['submit']))
 {
     if (empty($post['name']))
     {
         $error[] = 'Bạn chưa nhập tên sản phẩm';
+    } else {
+        $sql = "SELECT `name` FROM `nv4_vi_book_product` EXCEPT SELECT `name` FROM `nv4_vi_book_product` WHERE `id`=" . $post['id'];
+        $result = $db->query($sql);
+        foreach ($result as $data)
+        {
+            if ($post['name'] == $data['name'])
+            {
+                $error[] = 'tên sản phẩm đã tồn tại';
+            }
+        }
     }
     if (empty($post['price']))
     {
         $error[] = 'Bạn chưa nhập giá';
     }
-    if (empty($post['slug']))
-    {
-        $error[] = 'Bạn chưa nhập slug';
-    }
-    if (empty($post['category']))
-    {
-        $error[] = 'Bạn chưa nhập danh mục';
-    }
     if (empty($post['content']))
     {
         $error[] = 'Bạn chưa nhập mô tả';
     }
+    if (empty($post['slug']))
+    {
+        $error[] = 'Bạn chưa nhập slug';
+    } else {
+        $sql = "SELECT `slug` FROM `nv4_vi_book_product` EXCEPT SELECT `slug` FROM `nv4_vi_book_product` WHERE `id`=" . $post['id'];
+        $result = $db->query($sql);
+        foreach ($result as $data)
+        {
+            if ($post['slug'] == $data['slug'])
+            {
+                $error[] = 'slug đã tồn tại';
+            }
+        }
+    }
+    if (empty($post['category_id']))
+    {
+        $error[] = 'Bạn chưa nhập danh mục';
+    }
+
+    /* UPLOAD AVATAR */
+    if ($nv_Request->isset_request('submit', 'post')) {
+        if (isset($_FILES, $_FILES['image'], $_FILES['image']['tmp_name']) and is_uploaded_file($_FILES['image']['tmp_name']))
+        {
+            // Khởi tạo Class upload
+            $upload = new NukeViet\Files\Upload($admin_info['allow_files_type'], $global_config['forbid_extensions'], $global_config['forbid_mimes'], NV_UPLOAD_MAX_FILESIZE, NV_MAX_WIDTH, NV_MAX_HEIGHT);
+                    
+            // Thiết lập ngôn ngữ, nếu không có dòng này thì ngôn ngữ trả về toàn tiếng Anh
+            $upload->setLanguage($lang_global);
+
+            // Tải file lên server
+            if (empty($error)) {
+                $upload_info = $upload->save_file($_FILES['image'], NV_UPLOADS_REAL_DIR . '/product', false, $global_config['nv_auto_resize']);
+            }
+            if ($upload_info['error'] == '' && empty($error)) {
+                $image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/product' . '/' . $upload_info['basename'], NV_MAX_WIDTH, NV_MAX_HEIGHT);
+
+                $image->resizeXY(100, 100);
+                $newname = NV_CURRENTTIME . '_' . $upload_info['basename'];
+                $quality = 100;
+                $image->save(NV_UPLOADS_REAL_DIR . '/product' . '/', $newname, $quality);
+                $image->close();
+                $info = $image->create_Image_info;
+                //lấy biến
+                $image = $newname;
+            } else {
+                $error[] = $upload_info['error'];
+            }
+        } 
+    }  
+        if (empty($newname) && empty($nv_Request->get_title('oldImage', 'post', '')))
+        {
+            $error[] = 'Bạn chưa chọn hình ảnh sản phẩm';
+        }
+
+    /* END UPLOAD */
 
     if (empty($error))
     {
-        $sql = "INSERT INTO `nv4_vi_book_product`(`name`, `price`, `content`, `slug`, `category_id`) VALUES (:name , :price , :content , :slug , :category)";
-        $db->prepare($sql);
-        $s = $db->bindParam('name', $post['name']);
-        $s = $db->bindParam('price', $post['price']);
-        $s = $db->bindParam('content', $post['content']);
-        $s = $db->bindParam('slug', $post['slug']);
-        $s = $db->bindParam('category', $post['category']);
-        $s->execute();
-
-        if ($s->execute())
-        {
-            $alert = 'Sửa Thành Công';
+        if ($post['id'] > 0) {
+            // nếu có file tải lên thì update image mới, nếu  không có file tải lên thì không update image
+            if (!empty($newname))
+            {
+                try {
+                    $sql = "UPDATE `nv4_vi_book_product` SET `name`=:name,`image`=:image,`price`=:price,`content`=:content,`slug`=:slug,`category_id`=:category_id WHERE `id`=" . $post['id'];
+                    $s = $db->prepare($sql);
+                    $s->bindParam('name', $post['name']);
+                    $s->bindParam('image', $image);
+                    $s->bindParam('price', $post['price']);
+                    $s->bindParam('content', $post['content']);
+                    $s->bindParam('slug', $post['slug']);
+                    $s->bindParam('category_id', $post['category_id']);
+                    $s->execute();
+                    } catch (PDOException $e) {
+                        echo "<pre>";
+                        print_r($e);
+                        echo "</pre>";
+                        die();
+                    }
+                    $alert = 'Sửa Thành Công';
+                    nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
+            } else if (empty($newname))
+                    {
+                        try {
+                            $sql = "UPDATE `nv4_vi_book_product` SET `name`=:name,`price`=:price,`content`=:content,`slug`=:slug,`category_id`=:category_id WHERE `id`=" . $post['id'];
+                            $s = $db->prepare($sql);
+                            $s->bindParam('name', $post['name']);
+                            
+                            $s->bindParam('price', $post['price']);
+                            $s->bindParam('content', $post['content']);
+                            $s->bindParam('slug', $post['slug']);
+                            $s->bindParam('category_id', $post['category_id']);
+                            $s->execute();
+                            } catch (PDOException $e) {
+                                echo "<pre>";
+                                print_r($e);
+                                echo "</pre>";
+                                die();
+                            }
+                            $alert = 'Sửa Thành Công';
+                            nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
+                    }
+            
+        } else {
+            try {
+                $sql = "INSERT INTO `nv4_vi_book_product` (`name`, `image`, `price`, `content`, `slug`, `category_id`) VALUES (:name , :image, :price , :content , :slug , :category_id)";
+                $s = $db->prepare($sql);
+                $s->bindParam('name', $post['name']);
+                $s->bindParam('image', $image);
+                $s->bindParam('price', $post['price']);
+                $s->bindParam('content', $post['content']);
+                $s->bindParam('slug', $post['slug']);
+                $s->bindParam('category_id', $post['category_id']);
+                $s->execute();
+                } catch (PDOException $e) {
+                    echo "<pre>";
+                    print_r($e);
+                    echo "</pre>";
+                    die();
+                }
+                $alert = 'Thêm Thành Công';
         }
+        
+        
     }
 }
 
@@ -92,11 +222,16 @@ $xtpl->assign('OP', $op);
 
 
 $xtpl->assign('POST', $post);
+if (!empty($post['image']))
+{
+    $xtpl->parse('main.image');
+}
 
 $sql = "SELECT id,name FROM `nv4_vi_book_category`";
 $result = $db->query($sql);
 foreach ($result as $data)
 {
+    $data['selected'] = $data['id'] == $post['category_id'] ? 'selected' : '';
     $xtpl->assign('DATA', $data);
     $xtpl->parse('main.loopCat');
 }
@@ -106,7 +241,7 @@ if (!empty($alert)) {
     $xtpl->parse('main.alert');
 }
 if (!empty($error)) {
-    $xtpl->assign('ERROR', $error);
+    $xtpl->assign('ERROR', implode("<br>", $error));
     $xtpl->parse('main.error');
 }
 

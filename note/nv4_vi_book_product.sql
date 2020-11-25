@@ -52,8 +52,8 @@ CREATE TABLE `nv4_vi_book_product` (
 ALTER TABLE `nv4_vi_book_product`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD UNIQUE KEY `weight` (`weight`);
+  ADD UNIQUE KEY `name` (`name`);
+
 
 --
 -- AUTO_INCREMENT cho các bảng đã đổ

@@ -1,6 +1,4 @@
 <!-- BEGIN: main -->
-<form action="{NV_BASE_ADMINURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
-
 <!-- BEGIN: alert -->
     <div class='alert alert-info' role="alert">{ALERT}</div>
 <!-- END: alert -->
@@ -8,14 +6,19 @@
     <div class='alert alert-danger' role="alert">{ERROR}</div>
 <!-- END: error -->
 <form action="{NV_BASE_ADMINURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post" enctype="multipart/form-data">
-       
+    <input type="hidden" class="form-control" name="id" value="{POST.id}">
+    <input type="hidden" class="form-control" name="oldImage" value="{POST.image}">
+
     <div class="form-group">
         <label for="">Tên sản phẩm: </label>
         <input type="text" class="form-control" name="name" value="{POST.name}">
     </div>
     <div class="form-group">
         <label for="">Ảnh sản phẩm: </label>
-        <input type="file" class="form-control" name="image" value="">
+        <input type="file" class="form-control" name="image" value="{POST.image}">
+        <!-- BEGIN: image -->
+            <img src="{POST.image}" />
+        <!-- END: image -->
     </div>
     <div class="form-group">
         <label for="">Giá: </label>
@@ -28,10 +31,10 @@
     </div>
     <div class="form-group">
         <label for="">Danh mục: </label>
-        <select name="category" class="form-control col-3">
+        <select name="category_id" class="form-control col-3">
             <option value="">Chọn danh mục</option>
             <!-- BEGIN: loopCat -->
-            <option value="{DATA.id}">{DATA.name}</option>
+            <option value="{DATA.id}" {DATA.selected}>{DATA.name}</option>
             <!-- END: loopCat -->
         </select>
     </div>
