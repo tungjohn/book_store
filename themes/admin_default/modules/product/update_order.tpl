@@ -7,7 +7,6 @@
 <!-- END: error -->
 <form action="{NV_BASE_ADMINURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post" enctype="multipart/form-data">
     <input type="hidden" class="form-control" name="id" value="{POST.id}">
-    <input type="hidden" class="form-control" name="oldImage" value="{POST.image}">
 
     <div class="form-group">
         <label for="">Tên sản phẩm: </label>

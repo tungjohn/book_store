@@ -33,7 +33,7 @@ $post['category_id'] = $nv_Request->get_int('category_id', 'post', 0);
 $post['content'] = check_input($nv_Request->get_title('content', 'post', ''));
 $post['id'] = $nv_Request->get_int('id', 'post, get', 0);
 $post['action'] = $nv_Request->get_title('action', 'get', '');
-
+$post['active'] = $nv_Request->get_int('active', 'post', 1);
 /* EDIT PRODUCT */
         //lấy dữ liệu trong database in ra form sửa
         try {
@@ -95,6 +95,10 @@ if(!empty($post['submit']))
     {
         $error[] = 'Bạn chưa nhập danh mục';
     }
+    if (empty($post['active']))
+    {
+        $error[] = 'Bạn chưa nhập trạng thái';
+    }
 
     /* UPLOAD AVATAR */
     if ($nv_Request->isset_request('submit', 'post')) {
@@ -126,10 +130,11 @@ if(!empty($post['submit']))
             }
         } 
     }  
-        if (empty($newname) && empty($nv_Request->get_title('oldImage', 'post', '')))
-        {
-            $error[] = 'Bạn chưa chọn hình ảnh sản phẩm';
-        }
+    //Kiểm tra nếu không có file tải lên hoặc không có ảnh cũ thì hiển thị lỗi
+    if (empty($newname) && empty($nv_Request->get_title('oldImage', 'post', '')))
+    {
+        $error[] = 'Bạn chưa chọn hình ảnh sản phẩm';
+    }
 
     /* END UPLOAD */
 
@@ -140,7 +145,7 @@ if(!empty($post['submit']))
             if (!empty($newname))
             {
                 try {
-                    $sql = "UPDATE `nv4_vi_book_product` SET `name`=:name,`image`=:image,`price`=:price,`content`=:content,`slug`=:slug,`category_id`=:category_id WHERE `id`=" . $post['id'];
+                    $sql = "UPDATE `nv4_vi_book_product` SET `name`=:name,`image`=:image,`price`=:price,`content`=:content,`slug`=:slug,`category_id`=:category_id, `active`=:active  WHERE `id`=" . $post['id'];
                     $s = $db->prepare($sql);
                     $s->bindParam('name', $post['name']);
                     $s->bindParam('image', $image);
@@ -148,6 +153,7 @@ if(!empty($post['submit']))
                     $s->bindParam('content', $post['content']);
                     $s->bindParam('slug', $post['slug']);
                     $s->bindParam('category_id', $post['category_id']);
+                    $s->bindParam('active', $post['active']);
                     $s->execute();
                     } catch (PDOException $e) {
                         echo "<pre>";
@@ -156,11 +162,11 @@ if(!empty($post['submit']))
                         die();
                     }
                     $alert = 'Sửa Thành Công';
-                    nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
+                    nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
             } else if (empty($newname))
                     {
                         try {
-                            $sql = "UPDATE `nv4_vi_book_product` SET `name`=:name,`price`=:price,`content`=:content,`slug`=:slug,`category_id`=:category_id WHERE `id`=" . $post['id'];
+                            $sql = "UPDATE `nv4_vi_book_product` SET `name`=:name,`price`=:price,`content`=:content,`slug`=:slug,`category_id`=:category_id, `active`=:active WHERE `id`=" . $post['id'];
                             $s = $db->prepare($sql);
                             $s->bindParam('name', $post['name']);
                             
@@ -168,6 +174,7 @@ if(!empty($post['submit']))
                             $s->bindParam('content', $post['content']);
                             $s->bindParam('slug', $post['slug']);
                             $s->bindParam('category_id', $post['category_id']);
+                            $s->bindParam('active', $post['active']);
                             $s->execute();
                             } catch (PDOException $e) {
                                 echo "<pre>";
@@ -176,12 +183,12 @@ if(!empty($post['submit']))
                                 die();
                             }
                             $alert = 'Sửa Thành Công';
-                            nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
+                            nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
                     }
             
         } else {
             try {
-                $sql = "INSERT INTO `nv4_vi_book_product` (`name`, `image`, `price`, `content`, `slug`, `category_id`) VALUES (:name , :image, :price , :content , :slug , :category_id)";
+                $sql = "INSERT INTO `nv4_vi_book_product` (`name`, `image`, `price`, `content`, `slug`, `category_id`, `active`) VALUES (:name , :image, :price , :content , :slug , :category_id, :active)";
                 $s = $db->prepare($sql);
                 $s->bindParam('name', $post['name']);
                 $s->bindParam('image', $image);
@@ -189,6 +196,7 @@ if(!empty($post['submit']))
                 $s->bindParam('content', $post['content']);
                 $s->bindParam('slug', $post['slug']);
                 $s->bindParam('category_id', $post['category_id']);
+                $s->bindParam('active', $post['active']);
                 $s->execute();
                 } catch (PDOException $e) {
                     echo "<pre>";
@@ -197,6 +205,7 @@ if(!empty($post['submit']))
                     die();
                 }
                 $alert = 'Thêm Thành Công';
+                
         }
         
         

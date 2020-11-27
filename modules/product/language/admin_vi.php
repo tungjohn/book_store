@@ -22,3 +22,5 @@ $lang_module['main'] = 'Trang chính';
 $lang_module['config'] = 'Cấu hình';
 $lang_module['save'] = 'Lưu lại';
 $lang_module['list'] = 'Danh sách sản phẩm';
+$lang_module['orderlist'] = 'Danh sách đơn hàng';
+$lang_module['update_order'] = 'Sửa thông tin đơn hàng';
