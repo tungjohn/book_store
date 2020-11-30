@@ -1,0 +1,27 @@
+[Fri, 27 Nov 2020 08:27:47 +0700] [localhost] [::1] [Notice(8): Undefined index: order.list] [FILE: /modules/product/admin/orderlist.php] [LINE: 15]
+[Fri, 27 Nov 2020 09:45:39 +0700] [localhost] [::1] [Notice(8): Undefined index: category_id] [FILE: /modules/product/admin/update_order.php] [LINE: 116]
+[Fri, 27 Nov 2020 10:15:31 +0700] [localhost] [::1] [Notice(8): Undefined variable: post_month] [FILE: /modules/product/admin/update_order.php] [LINE: 111]
+[Fri, 27 Nov 2020 10:20:19 +0700] [localhost] [::1] [Error(1): Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'nv4_vi_book_order_detail.order_id' in 'where clause' in D:\xampp\htdocs\book_store\vendor\vinades\nukeviet\Core\Database.php:495
+Stack trace:
+#0 D:\xampp\htdocs\book_store\vendor\vinades\nukeviet\Core\Database.php(495): PDO->query('SELECT * FROM `...')
+#1 D:\xampp\htdocs\book_store\modules\product\admin\update_order.php(116): NukeViet\Core\Database->query('SELECT * FROM `...')
+#2 D:\xampp\htdocs\book_store\admin\index.php(175): require('D:\\xampp\\htdocs...')
+#3 {main}
+  thrown] [FILE: /vendor/vinades/nukeviet/Core/Database.php] [LINE: 495]
+[Fri, 27 Nov 2020 10:23:30 +0700] [localhost] [::1] [Notice(8): A non well formed numeric value encountered] [FILE: /modules/product/admin/update_order.php] [LINE: 120]
+[Fri, 27 Nov 2020 10:50:05 +0700] [localhost] [::1] [Notice(8): Undefined index: active] [FILE: /modules/product/admin/update_order.php] [LINE: 122]
+[Fri, 27 Nov 2020 11:09:13 +0700] [localhost] [::1] [Error(1): Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '* FROM `nv4_vi_book_orders` WHERE id = ?' at line 1 in D:\xampp\htdocs\book_store\vendor\vinades\nukeviet\Core\Database.php:520
+Stack trace:
+#0 D:\xampp\htdocs\book_store\vendor\vinades\nukeviet\Core\Database.php(520): PDO->prepare('DELETE * FROM `...', Array)
+#1 D:\xampp\htdocs\book_store\modules\product\admin\orderlist.php(42): NukeViet\Core\Database->prepare('DELETE * FROM `...')
+#2 D:\xampp\htdocs\book_store\admin\index.php(175): require('D:\\xampp\\htdocs...')
+#3 {main}
+  thrown] [FILE: /vendor/vinades/nukeviet/Core/Database.php] [LINE: 520]
+[Fri, 27 Nov 2020 11:13:30 +0700] [localhost] [::1] [Warning(2): PDOStatement::bindParam() expects at least 2 parameters, 1 given] [FILE: /modules/product/admin/orderlist.php] [LINE: 43]
+[Fri, 27 Nov 2020 11:13:30 +0700] [localhost] [::1] [Error(1): Uncaught PDOException: SQLSTATE[HY000]: General error: 2031  in D:\xampp\htdocs\book_store\vendor\vinades\nukeviet\Core\Database.php:611
+Stack trace:
+#0 D:\xampp\htdocs\book_store\vendor\vinades\nukeviet\Core\Database.php(611): PDOStatement->execute(NULL)
+#1 D:\xampp\htdocs\book_store\modules\product\admin\orderlist.php(44): NukeViet\Core\NukeVietPDOStatement->execute()
+#2 D:\xampp\htdocs\book_store\admin\index.php(175): require('D:\\xampp\\htdocs...')
+#3 {main}
+  thrown] [FILE: /vendor/vinades/nukeviet/Core/Database.php] [LINE: 611]

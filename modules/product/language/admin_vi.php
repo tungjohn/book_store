@@ -18,7 +18,7 @@ $lang_translator['copyright'] = '@Copyright (C) 2020 VINADES.,JSC All rights res
 $lang_translator['info'] = '';
 $lang_translator['langtype'] = 'lang_module';
 
-$lang_module['main'] = 'Trang chính';
+$lang_module['main'] = 'Thêm, sửa thông tin sản phẩm';
 $lang_module['config'] = 'Cấu hình';
 $lang_module['save'] = 'Lưu lại';
 $lang_module['list'] = 'Danh sách sản phẩm';

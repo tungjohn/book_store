@@ -1,0 +1,4 @@
+[Mon, 30 Nov 2020 08:17:48 +0700] [localhost] [::1] [Notice(8): Undefined index: order.list] [FILE: /modules/product/admin/orderlist.php] [LINE: 15]
+[Mon, 30 Nov 2020 08:17:48 +0700] [localhost] [::1] [Notice(8): Undefined variable: email_search_query] [FILE: /modules/product/admin/orderlist.php] [LINE: 55]
+[Mon, 30 Nov 2020 08:17:48 +0700] [localhost] [::1] [Notice(8): Undefined variable: email_search_query] [FILE: /modules/product/admin/orderlist.php] [LINE: 132]
+[Mon, 30 Nov 2020 09:40:25 +0700] [localhost] [::1] [Notice(8): Undefined index: total_price] [FILE: /modules/product/admin/update_order.php] [LINE: 192]

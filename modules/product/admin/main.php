@@ -112,13 +112,13 @@ if(!empty($post['submit']))
 
             // Tải file lên server
             if (empty($error)) {
-                $upload_info = $upload->save_file($_FILES['image'], NV_UPLOADS_REAL_DIR . '/product', false, $global_config['nv_auto_resize']);
+                $upload_info = $upload->save_file($_FILES['image'], NV_UPLOADS_REAL_DIR . '/product' . '/temp', false, $global_config['nv_auto_resize']);
             }
             if ($upload_info['error'] == '' && empty($error)) {
-                $image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/product' . '/' . $upload_info['basename'], NV_MAX_WIDTH, NV_MAX_HEIGHT);
+                $image = new NukeViet\Files\Image(NV_UPLOADS_REAL_DIR . '/product' . '/temp' . '/' . $upload_info['basename'], NV_MAX_WIDTH, NV_MAX_HEIGHT);
 
-                $image->resizeXY(100, 100);
-                $newname = NV_CURRENTTIME . '_' . $upload_info['basename'];
+                $image->resizeXY(200, 200);
+                $newname = $upload_info['basename'];
                 $quality = 100;
                 $image->save(NV_UPLOADS_REAL_DIR . '/product' . '/', $newname, $quality);
                 $image->close();

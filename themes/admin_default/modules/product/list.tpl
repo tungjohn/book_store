@@ -1,8 +1,7 @@
 <!-- BEGIN: list -->
 <div class="container">
-  <h2>Danh sách sản phẩm</h2>
     <!-- search -->
-    <form action="{NV_BASE_ADMINURL}index.php?" method="get">
+    <form action="{NV_BASE_ADMINURL}index.php?" method="get" name="search_products">
       <input type="hidden" name="{NV_LANG_VARIABLE}" value="{NV_LANG_DATA}">
       <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}">
       <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}">
@@ -36,16 +35,21 @@
                 </div>
             </div>
             
-            <div class="col-xs-12 col-md-3">
+            <div class="col-xs-12 col-md-2">
                 <div class="form-group">
                     <input class="btn btn-primary" type="submit" value="Tìm kiếm">
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-2">
+                <div class="form-group">
+                    <a href="#" class="btn btn-danger" id="clear_search">Xóa bộ lọc</a>
                 </div>
             </div>
         </div>
     </form>
     <!-- search -->
   <div class="table-responsive">          
-  <table class="table table-bordered">
+  <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
         <th>ID</th>
@@ -71,9 +75,15 @@
         <td>{DATA.slug}</td>
         <td>{DATA.category}</td>
         <td>{DATA.active}</td>
-        <td>
-          <a href="{DATA.url_edit}" class="edit btn btn-warning">Sửa</a>
-          <a href="{DATA.url_delete}" class="delete btn btn-danger">Xóa</a>
+        <td class="text-center">
+          <a href="{DATA.url_edit}" class="edit btn btn-warning btn-xs btn_edit">
+          <em class="fa fa-edit margin-right"></em>
+            Sửa
+          </a>
+          <a href="{DATA.url_delete}" class="delete btn btn-danger btn-xs">
+          <em class="fa fa-trash-o margin-right"></em>
+          Xóa
+          </a>
         </td>
       </tr>
     <!-- END: dataLoop -->
@@ -98,7 +108,14 @@
                 return false; 
               } 
           });
-         
+         $('#clear_search').on('click', function (e) {
+                e.preventDefault();
+                $("input[name='name']").val('');
+                $("select[name='category_id']").val('');
+                $("select[name='active']").val('');
+
+                $("form[name='search_products']").trigger("submit");
+          });
       });
 </script>
 <!-- END: list -->

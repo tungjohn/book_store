@@ -77,3 +77,45 @@ function nv_theme_samples_search($array_data)
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
+/**
+ * nv_theme_samples_search()
+ * 
+ * @param mixed $array_data
+ * @return
+ */
+function nv_theme_samples_cart($array_data)
+{
+    global $module_info, $lang_module, $lang_global, $op;
+
+    $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    //------------------
+    // Viết code vào đây
+    //------------------
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+/**
+ * nv_theme_samples_search()
+ * 
+ * @param mixed $array_data
+ * @return
+ */
+function nv_theme_samples_category($array_data)
+{
+    global $module_info, $lang_module, $lang_global, $op;
+
+    $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    //------------------
+    // Viết code vào đây
+    //------------------
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}

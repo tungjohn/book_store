@@ -54,7 +54,7 @@ $total = $db->query($sql)->fetchColumn();
 //------------------------------
 // Viết code xử lý chung vào đây
 //------------------------------
-
+/* lấy id và action để kiểm tra delete */
 $post['action'] = $nv_Request->get_title('action', 'get', '');
 $post['id'] = $nv_Request->get_title('id', 'post, get', '');
 $checksess = $nv_Request->get_title('checksess', 'post, get', '');
@@ -158,9 +158,10 @@ foreach ($result as $data)
 }
 
 
-
+/* Link pagination */
 $base_url = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list';
 
+//Phân trang khi chuyển trang không bị mất lọc
 if (!empty($post['name']))
 {
     $base_url .= '&name=' . $post['name'];
@@ -180,6 +181,7 @@ if ($total > 5 )
 {
     $xtpl->parse('list.page');
 }
+/* End link pagination */
 //-------------------------------
 // Viết code xuất ra site vào đây
 //-------------------------------
