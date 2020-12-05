@@ -11,6 +11,9 @@
 		<a href="{DATA.url_detail}"><img src="{DATA.image}" alt="" class="avt"></a>
 		
 	</div>
+	<div>
+		<div style="background-image: url({DATA.image})"></div>
+	</div>
 	<div class="caption">
 			<div class="panel-footer">
 				<h3>{LANG.price} : {DATA.price} </h3>
