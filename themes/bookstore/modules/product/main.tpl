@@ -2,18 +2,21 @@
 <!-- BEGIN: dataLoop -->
 <div class="col-md-8">
 
-<div class="panel panel-default">
-	<div class="panel-body">
-		<h3>{LANG.name}: {DATA.name}</h3>
+<div class="panel panel-default"  >
+<div class="thumbnail">
+	<div class="panel-body" style="height:50px" >
+		<h3 class="name">{LANG.name}: {DATA.name}</h3>
+	</div>
 	</div>
 	
 	<div class="thumbnail">
-		<a href="{DATA.url_detail}"><img src="{DATA.image}" alt="" class="avt"></a>
+		<div class="panel">
+			<a href="{DATA.url_detail}" >
+				<img src="{DATA.image}" style="border: 1px solid yellow; height:300px">
+			</a>
+		</div>
+	</div>
 		
-	</div>
-	<div>
-		<div style="background-image: url({DATA.image})"></div>
-	</div>
 	<div class="caption">
 			<div class="panel-footer">
 				<h3>{LANG.price} : {DATA.price} </h3>
@@ -32,6 +35,8 @@
 </div>
 	
 <!-- END: dataLoop -->	
+
+
 
 
 <!-- END: main -->
