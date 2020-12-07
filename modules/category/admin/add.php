@@ -25,17 +25,16 @@ if($nv_Request->isset_request("submit", "post")){
     $post['name'] = $nv_Request->get_title('name', 'post', '');
     $post['active'] = $nv_Request->get_int('active', 'post', 1);
     
-//     $row = "SELECT `name` FROM `nv4_vi_book_category`";
-//     $result = $db->query($row)->fetchColumn();
+    $row = "SELECT `id`, `name` FROM `nv4_vi_book_category` where `name`=".$db->quote($post['name']);
+    $result = $db->query($row)->fetch();
     
     if(empty($post['name'])){
         $error[]= $lang_module['error_name'];
+//     }else if($result['name'] == $post['name']) {
+//         $error[]= $lang_module['error_name_exist'];
     }
-//     }else if($result['name'] > 1) {
-//         $error[]= "Đã trùng";
-//     }
     
-    
+    $post['name'] = $nv_Request->get_title('name', 'post', '');
     if(empty($error)){
         if($post['id'] > 0){
             //update
@@ -43,6 +42,11 @@ if($nv_Request->isset_request("submit", "post")){
                 $sql = "UPDATE `nv4_vi_book_category` SET `name`= :name,`active`= :active, `updated_at`= :update_at WHERE `id` =" .$post['id'];
                 $s = $db->prepare($sql);
                 $s->bindValue('update_at', 0);
+                $s->bindParam('name', $post['name']);
+                $s->bindParam('active', $post['active']);
+                $exe = $s->execute();
+                
+                $error[]= $lang_module['succ_U'];
             } catch (Exception $e) {
                 echo '<pre><code>';
                 print_r($e);
@@ -52,11 +56,22 @@ if($nv_Request->isset_request("submit", "post")){
         }else{
             //insert
             //         try {
+            $row = "SELECT `id`, `name` FROM `nv4_vi_book_category` where `name`=".$db->quote($post['name']);
+            $result = $db->query($row)->fetch();
+            
+            if($result['name'] == $post['name']) {
+                $error[]= $lang_module['error_name_exist'];
+            }else{
             $sql = "INSERT INTO `nv4_vi_book_category`(`name`, `weight`, `active`, `created_at`) VALUES (:name, :weight, :active, :created_at)";
             
             $s = $db->prepare($sql);            
             $s->bindValue('weight', 1);
             $s->bindValue('created_at', NV_CURRENTTIME);
+            $s->bindParam('name', $post['name']);
+            $s->bindParam('active', $post['active']);
+            $exe = $s->execute();
+            
+            $error[]= $lang_module['succ_I'];
             
 
             //         } catch (Exception $e) {
@@ -66,21 +81,11 @@ if($nv_Request->isset_request("submit", "post")){
             //         }       
             //     }
             }
-        $s->bindParam('name', $post['name']);
-        $s->bindParam('active', $post['active']);
-        $exe = $s->execute();
-        
-        if($exe){
-            if($post['id'] > 0){
-                $error[]= $lang_module['succ_U'];
-            }else{
-                $error[]= $lang_module['succ_I'];
-            }
-            
-        }else{
+        }
+    }else{
             $error[]= $lang_module['error'];
         }
-    }
+    
 }else if ($post['id'] > 0) {
     $sql = "SELECT * FROM `nv4_vi_book_category` WHERE id = " .$post['id'];
     $post = $db->query($sql)->fetch();
@@ -88,7 +93,7 @@ if($nv_Request->isset_request("submit", "post")){
 
 
 //------------------------------
-// Viáº¿t code xá»­ lÃ½ chung vÃ o Ä‘Ã¢y
+// ViÃ¡ÂºÂ¿t code xÃ¡Â»Â­ lÃƒÂ½ chung vÃƒÂ o Ã„â€˜ÃƒÂ¢y
 //------------------------------
 
 $xtpl = new XTemplate('add.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
@@ -108,7 +113,7 @@ if(!empty($error)){
 }
 
 //-------------------------------
-// Viáº¿t code xuáº¥t ra site vÃ o Ä‘Ã¢y
+// ViÃ¡ÂºÂ¿t code xuÃ¡ÂºÂ¥t ra site vÃƒÂ o Ã„â€˜ÃƒÂ¢y
 //-------------------------------
 
 $xtpl->parse('main');
