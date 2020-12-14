@@ -112,7 +112,7 @@ function nv_theme_album_order($row_order, $post, $error)
     $row_order['stt'] = $i;
     
     $row_order['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/'. $module_name . '/' . $row_order['image'];
-    
+    $row_order['total_price'] = number_format($row_order['price'] * $row_order['quantity'] );
     
     $xtpl->assign('ROWORDER', $row_order);
     

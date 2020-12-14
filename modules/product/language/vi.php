@@ -37,3 +37,10 @@ $lang_module['img'] = 'Ảnh';
 $lang_module['total_price'] = 'Tổng số tiền';
 $lang_module['order_note'] = 'Ý kiến khách hàng';
 
+$lang_module['error_name_user'] = 'Chưa nhập tên';
+$lang_module['error_phone'] = 'Chưa nhập số điện thoại';
+$lang_module['error_address'] = 'Chưa nhập địa chỉ';
+$lang_module['error_email'] = 'Chưa nhập email';
+$lang_module['error_email_@'] = 'Bạn nhập sai gmail';
+$lang_module['succ_I'] = 'Thêm thành công';
+

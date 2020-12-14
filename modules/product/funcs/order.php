@@ -20,7 +20,7 @@ $post = $error = [];
 
 
 if($nv_Request->isset_request("submit", "post")){
-    
+    $post['id'] = $nv_Request->get_int('id', 'post', '');
     $post['name_user'] = $nv_Request->get_title('name_user', 'post', '');
     $post['email'] = $nv_Request->get_title('email', 'post', '');
     $post['phone'] = $nv_Request->get_int('phone', 'post', '');
@@ -36,6 +36,8 @@ if($nv_Request->isset_request("submit", "post")){
     
     if(empty($post['email'])) {
         $error[]= $lang_module['error_email'];
+    }elseif (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+        $error[]= $lang_module['error_email_@'];
     }
     
     if(empty($post['phone'])) {
@@ -45,22 +47,42 @@ if($nv_Request->isset_request("submit", "post")){
     if(empty($post['address'])) {
         $error[]= $lang_module['error_address'];
     }
-    $total_price = $post['quantity'] * $post['price'];
+    $total_price= $post['quantity'] * $post['price'];
     if(empty($error)){
-        $sql = "INSERT INTO `nv4_vi_book_orders`(`name`, `email`, `phone`, `address`, `total_price`, `order_note`, `payment_method`, `weight`, `active`, `created_at`, `updated_at`) VALUES (:name,:email,:phone,:address,:total_price,:order_not,:payment_method,:weight,:actice,:created_at)";
-        $s = $db->prepare($sql);
-        $s->bindValue('created_at', NV_CURRENTTIME);
-        $s->bindParam('name', $post['name_user']);
-        $s->bindParam('email', $post['email']);
-        $s->bindParam('phone', $post['phone']);
-        $s->bindParam('address', $post['address']);
-        $s->bindValue('total_price', $total_price);
-        $s->bindValue('payment_method', 1);
-        $s->bindParam('quantity', $post['quantity']);
-        $s->bindParam('order_note', $post['order_note']);
-        $s->bindParam('active', $post['active']);
-        
-        $exe = $s->execute();
+       
+           $sql = "INSERT INTO `nv4_vi_book_orders`(`name`, `email`, `phone`, `address`, `total_price`, `order_note`, `payment_method`, `weight`, `active`, `created_at`) VALUES (:name, :email, :phone, :address, :total_price, :order_note, :payment_method, :weight, :active, :created_at)";
+           $s = $db->prepare($sql);
+           
+           $s->bindParam('name', $post['name_user'] );
+           $s->bindParam('email', $post['email']);
+           $s->bindParam('phone', $post['phone']);
+           $s->bindParam('address', $post['address']);
+           $s->bindParam('total_price', $total_price);
+           $s->bindParam('order_note', $post['order_note']);
+           $s->bindValue('payment_method', 1);
+           $s->bindValue('active', 1);
+           $s->bindValue('weight', 1);
+           $s->bindValue('created_at', NV_CURRENTTIME);
+           
+           $exe = $s->execute();
+           if ($exe) {
+//                try {
+               $sql = "SELECT id FROM `nv4_vi_book_product`";
+               $row_product = $db->query($sql)->fetch();
+               
+               $sql = "INSERT INTO `nv4_vi_book_order_detail`(`order_id`, `product_id`, `quantity`, `price`) VALUES (:order_id, :product_id, :quantity, :price)";
+               $s = $db->prepare($sql);
+               $s->bindParam('order_id',  $post['id']);
+               $s->bindParam('product_id', $row_product['id'] );
+               $s->bindParam('quantity', $post['quantity'] );
+               $s->bindParam('price', $post['price'] );
+               $exe = $s->execute();
+               $error[]= $lang_module['succ_I']; 
+//                } catch (PDOException $e) {
+//                    print_r($e);
+//                }
+           }
+       
         
     }
     
