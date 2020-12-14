@@ -6,9 +6,7 @@
 	<div class="panel-heading">{LANG.category_id}</div>
     <!-- BEGIN: cate -->
     <table class="table">
-		<td class="text-center">
-            <a href ="{CATE.url_product}" >{CATE.name}</a>
-        </td>
+		<td class="text-center"><a href ="{CATE.url_product}" >{CATE.name}</a></td>
     </table>
     <!-- END: cate -->
 
@@ -16,26 +14,26 @@
 </div>
 
 <div class="col-xs-19 col-sm-19 col-md-19">
-<!-- BEGIN: loop -->
+<!-- BEGIN: product -->
 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 <div class="panel panel-default"  >
 <div class="thumbnail">
 	<div class="panel-body" style="height:50px" >
-		<h3 class="name">{LANG.name}: {ROW.name}</h3>
+		<h3 class="name">{LANG.name}: {PRODUCT.name}</h3>
 	</div>
 	</div>
 	
 	<div class="thumbnail">
 		<div class="panel">
-			<a href="{ROW.url_detail}" >
-				<img src="{ROW.image}" style="border: 1px solid yellow; height:300px">
+			<a href="{PRODUCT.url_detail}" >
+				<img src="{PRODUCT.image}" style="border: 1px solid yellow; height:300px">
 			</a>
 		</div>
 	</div>
 		
 	<div class="caption">
 			<div class="panel-footer">
-				<h3>{LANG.price} : {ROW.price} </h3>
+				<h3>{LANG.price} : {PRODUCT.price} </h3>
 			</p></div>
 			<div class="text-center">
 				<p><form action="{NV_BASE_SITEURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="POST">
@@ -50,7 +48,7 @@
 		
 </div>
 	
-<!-- END: loop -->	
+<!-- END: product -->	
 </div>
 
 

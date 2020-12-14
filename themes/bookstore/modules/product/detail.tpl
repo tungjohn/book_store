@@ -3,56 +3,32 @@
 	<div class="row">
 		<div>
 			<div class="col-xs-8 col-sm-8 col-md-8 text-center">		
-				<img src="{ROW.image}" alt="" class="avt">
+				<img src="{ROWDETAIL.image}" alt="" class="avt">
 			</div>
 			<div class="col-xs-8 col-sm-8 col-md-8 ">
-				<h3>{ROW.name}</h3>
+				<h3>{ROWDETAIL.name}</h3>
 				</br>
 				<div class="container">
 				<p>
-					{LANG.price} : {ROW.price} 
+					{LANG.price} : {ROWDETAIL.price} 
 					
 				</p>
-				<p>{LANG.category_id}: {ROW_CATE.name}</p>
+				<p>{LANG.category_id}: {ROWCATE.name}</p>
 				</div>
 				<p>
-					<a href="#" class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+					<a href="{ROWDETAIL.url_order}" class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+                    
 				</p>
 			</div>
-			<div class="col-xs-8 col-sm-8 col-md-8">	
-				<form action="{NV_BASE_ADMINURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
-					
-					<h2>Điền thông tin </h2>
-					
-					<div class="form-group ">
-				        <label for="">{LANG.name_user}: </label>
-				        <input type="text" class="form-control" name="name" value="{POST.price}">
-				    </div>
-				    
-				    <div class="form-group ">
-				        <label for="">{LANG.email}: </label>
-				        <input type="text" class="form-control" name="name" value="{POST.price}">
-				    </div>
-				    
-				    <div class="form-group ">
-				    	<div class="col-xs-12 col-sm-12 col-md-12">
-					        <label for="">{LANG.phone}: </label>
-					        <input type="text" class="form-control" name="name" value="{POST.price}">
-					    </div>
-					    <div class="col-xs-12 col-sm-12 col-md-12">
-					        <label for="">{LANG.quantity}: </label>
-					        <input type="number" class="form-control" name="name" value="{POST.price}">
-					    </div>
-				    </div>
-				    
-				    <div class="form-group ">
-				        <label for="">{LANG.address}: </label>
-				        <input type="text" class="form-control" name="name" value="{POST.price}">
-				    </div>
-				    
-				    
-				    
-				</form>
+			<div class="col-xs-8 col-sm-8 col-md-8">
+            <caption>Một số loại sách liên quan</caption>	
+            <!-- BEGIN: row_rd -->
+				<div class="thumbnail">
+                
+                    <h3 class="text-center">{ROWRD.name}</h3>
+                    <a href="{ROWRD.url_detail}"><img src="{ROWRD.image}" alt="" class="avt"></a>
+                </div>
+            <!-- END: row_rd -->
 			</div>
 		</div>	
 	</div>
