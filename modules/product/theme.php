@@ -18,7 +18,7 @@ if (!defined('NV_IS_MOD_ALBUM')) {
  * @param mixed $array_data
  * @return
  */
-function nv_theme_album_main($array_data,$row_cate)
+function nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total, $row_count)
 {
     global $module_info, $lang_module, $lang_global, $op, $module_name;
 
@@ -31,6 +31,7 @@ function nv_theme_album_main($array_data,$row_cate)
         foreach ($array_data as $row){
             $row['stt'] = $i;
             $row['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/'. $module_name . '/' . $row['image'];
+            $row['price'] = number_format($row['price']);
 //             $row['active'] = !empty($array_active[$row['active']]) ? $array_active[$row['active']] : '';
             $row['url_detail'] = NV_BASE_SITEURL .'index.php?'. NV_LANG_VARIABLE .'='. NV_LANG_DATA .'&amp;'. NV_NAME_VARIABLE .'='. $module_name .'&amp;'. NV_OP_VARIABLE .'=detail&amp;id='. $row['id'];
 //             $row['url_delete'] = NV_BASE_ADMINURL .'index.php?'. NV_LANG_VARIABLE .'='. NV_LANG_DATA .'&amp;'. NV_NAME_VARIABLE .'='. $module_name .'&amp;'. NV_OP_VARIABLE .'=list&amp;id='. $row['id']. '&active=delete&checksess='. md5($row['id'] .$NV_CHECK_SESSION);
@@ -49,7 +50,31 @@ function nv_theme_album_main($array_data,$row_cate)
             $xtpl->parse('main.cate');
         }
     }
-
+    
+    $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=main';
+    $generate_page = nv_generate_page($base_url, $total, $perpage, $page);
+    $xtpl->assign('GENERATE_PAGE', $generate_page);
+    
+    if (!empty($post['name']))
+    {
+        $base_url .= '&name=' . $post['name'];
+    }
+    if (!empty($post['category_id']))
+    {
+        $base_url .= '&category_id=' . $post['category_id'];
+    }
+    if (!empty($post['active']))
+    {
+        $base_url .= '&active=' . $post['active'];
+    }
+    
+    if ($total > 5 )
+    {
+        $xtpl->parse('main.page');
+    }
+    
+    $xtpl->assign('COUNT', $row_count);
+    $xtpl->parse('main.cate.count');
     
 
     //------------------
@@ -99,7 +124,7 @@ function nv_theme_album_detail($row_detail,$row_cate, $row_rd)
 }
 
 
-function nv_theme_album_order($row_order, $post, $error)
+function nv_theme_album_order($row_order, $post, $error, $array_province)
 {
     global $module_info, $lang_module, $lang_global, $op, $module_name;
     
@@ -110,17 +135,32 @@ function nv_theme_album_order($row_order, $post, $error)
     $xtpl->assign('OP', $op);
     $i = 1;
     $row_order['stt'] = $i;
-    
+//     $row_order['quantity'] = !empty($row_order['quantity']) ? $row_order['quantity'] : 1;
     $row_order['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/'. $module_name . '/' . $row_order['image'];
     $row_order['total_price'] = number_format($row_order['price'] * $row_order['quantity'] );
     
     $xtpl->assign('ROWORDER', $row_order);
     
+    foreach ($array_province as $key => $province){
+        
+        
+        
+        $xtpl->assign('PROVINCE', array(
+            'key' => $key,
+            'title' => $province['title']
+        ));
+        $xtpl->parse('main.province');
+    }
+    
+//     $post['quantity'] = !empty($post['quantity']) ? $post['quantity'] : 1;
     $xtpl->assign('POST', $post);
     $xtpl->assign('ERROR', implode('<br>',$error));
     if(!empty($error)){
         $xtpl->parse('main.error');
     };
+    
+
+    
     
     //------------------
     // Viết code vào đây

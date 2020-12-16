@@ -43,4 +43,7 @@ $lang_module['error_address'] = 'Chưa nhập địa chỉ';
 $lang_module['error_email'] = 'Chưa nhập email';
 $lang_module['error_email_@'] = 'Bạn nhập sai gmail';
 $lang_module['succ_I'] = 'Thêm thành công';
-
+$lang_module['vnd'] = 'đ';
+$lang_module['error_quantity'] = 'Số lượng nhập ít nhất 1 quyển, nhiều nhất 10 quyển';
+$lang_module['error_quantity_str'] = 'Số lượng không được nhập chữ';
+$lang_module['error_quantity_float'] = 'Không được nhập dấu , && ,';

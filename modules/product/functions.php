@@ -13,3 +13,4 @@ if (!defined('NV_SYSTEM')) {
 }
 
 define('NV_IS_MOD_ALBUM', true);
+

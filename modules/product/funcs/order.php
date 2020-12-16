@@ -18,6 +18,45 @@ $key_words = $module_info['keywords'];
 $row_order =[];
 $post = $error = [];
 
+if($nv_Request->isset_request("change_province", "post,get")){
+    $id_province = $nv_Request->get_int('id_province', 'post,get', 0);
+    if($id_province > 0){
+        $sql = "SELECT `id`, `title` FROM `nv4_vi_location_district` WHERE idprovince = " . $id_province . " ORDER BY weight ASC";
+        $result= $db->query($sql);
+        $html='';
+        while ($province = $result->fetch() ) {
+            $html .= '<option value="'.$province['id'].'">'.$province['title'].'</option>';
+        }
+        die($html);
+    }else {
+        die("ERR");
+    }
+}
+
+if($nv_Request->isset_request("change_district", "post,get")){
+    $id_district = $nv_Request->get_int('id_district', 'post,get', 0);
+    if($id_district > 0){
+        $sql = "SELECT `id`, `title` FROM `nv4_vi_location_ward` WHERE iddistrict = " . $id_district . " ORDER BY weight ASC";
+        $result= $db->query($sql);
+        $html='';
+        while ($district = $result->fetch() ) {
+            $html .= '<option value="'.$district['id'].'">'.$district['title'].'</option>';
+        }
+        die($html);
+    }else {
+        die("ERR");
+    }
+}
+
+$sql ="SELECT `id`, `title` FROM `nv4_vi_location_province` ORDER BY weight ASC";
+$result= $db->query($sql);
+$array_province = [];
+while ($province = $result->fetch() ) {
+//     print_r($province);
+    $array_province[$province['id']]= $province;
+}
+
+
 
 if($nv_Request->isset_request("submit", "post")){
     $post['id'] = $nv_Request->get_int('id', 'post', '');
@@ -28,7 +67,9 @@ if($nv_Request->isset_request("submit", "post")){
     $post['quantity'] = $nv_Request->get_int('quantity', 'post', '');
     $post['price'] = $nv_Request->get_int('price', 'post', '');
     $post['order_note'] = $nv_Request->get_title('order_note', 'post', '');
-    $post['price'] = $nv_Request->get_int('price', 'post', '');
+    $post['province'] = $nv_Request->get_int('province', 'post', '');
+    $post['district'] = $nv_Request->get_int('district', 'post', '');
+    $post['ward'] = $nv_Request->get_int('ward', 'post', '');
     
     if(empty($post['name_user'])) {
         $error[]= $lang_module['error_name_user'];
@@ -44,10 +85,32 @@ if($nv_Request->isset_request("submit", "post")){
         $error[]= $lang_module['error_phone'];
     }
     
-    if(empty($post['address'])) {
+    if(empty($post['province']) || empty($post['district']) || empty($post['ward'])) {
         $error[]= $lang_module['error_address'];
     }
+    
+    if($post['quantity'] <= 0 || $post['quantity'] > 10) {
+        $error[]= $lang_module['error_quantity'];
+    }elseif(is_float($post['quantity'])) {
+        $error[]= $lang_module['error_quantity_float'];
+    }elseif(is_string($post['quantity'])) {
+        $error[]= $lang_module['error_quantity_str'];
+    }
+    
+
+    
     $total_price= $post['quantity'] * $post['price'];
+    
+    $sql = "SELECT `id`, `title` FROM `nv4_vi_location_ward` WHERE id = " . $post['ward'];
+    $ward= $db->query($sql)->fetch();
+    
+    $sql = "SELECT `id`, `title` FROM `nv4_vi_location_district` WHERE id = " . $post['district'] ;
+    $district = $db->query($sql)->fetch();
+    
+    $sql ="SELECT `id`, `title` FROM `nv4_vi_location_province` WHERE id = " . $post['province'];
+    $province = $db->query($sql)->fetch();
+    
+
     if(empty($error)){
        
            $sql = "INSERT INTO `nv4_vi_book_orders`(`name`, `email`, `phone`, `address`, `total_price`, `order_note`, `payment_method`, `weight`, `active`, `created_at`) VALUES (:name, :email, :phone, :address, :total_price, :order_note, :payment_method, :weight, :active, :created_at)";
@@ -56,7 +119,7 @@ if($nv_Request->isset_request("submit", "post")){
            $s->bindParam('name', $post['name_user'] );
            $s->bindParam('email', $post['email']);
            $s->bindParam('phone', $post['phone']);
-           $s->bindParam('address', $post['address']);
+           $s->bindValue('address', $province['title'] .'-'. $district['title'] .'-'. $ward['title']);
            $s->bindParam('total_price', $total_price);
            $s->bindParam('order_note', $post['order_note']);
            $s->bindValue('payment_method', 1);
@@ -67,13 +130,13 @@ if($nv_Request->isset_request("submit", "post")){
            $exe = $s->execute();
            if ($exe) {
 //                try {
-               $sql = "SELECT id FROM `nv4_vi_book_product`";
-               $row_product = $db->query($sql)->fetch();
+               $sql = "SELECT id FROM `nv4_vi_book_orders`";
+               $orders = $db->query($sql)->fetch();
                
                $sql = "INSERT INTO `nv4_vi_book_order_detail`(`order_id`, `product_id`, `quantity`, `price`) VALUES (:order_id, :product_id, :quantity, :price)";
                $s = $db->prepare($sql);
-               $s->bindParam('order_id',  $post['id']);
-               $s->bindParam('product_id', $row_product['id'] );
+               $s->bindParam('order_id', $orders['id']);
+               $s->bindParam('product_id', $post['id'] );
                $s->bindParam('quantity', $post['quantity'] );
                $s->bindParam('price', $post['price'] );
                $exe = $s->execute();
@@ -96,7 +159,7 @@ $row_order = $db->query($sql)->fetch();
 // Viết code vào đây
 //------------------
 
-$contents = nv_theme_album_order($row_order, $post, $error);
+$contents = nv_theme_album_order($row_order, $post, $error, $array_province);
 
 
 
