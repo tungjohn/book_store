@@ -1,12 +1,12 @@
 <!-- BEGIN: main -->
 
-<div class="col-xs-5 col-sm-5 col-md-5 text-center">
+<div class="col-xs-5 col-sm-5 col-md-5 ">
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading">{LANG.category_id}</div>
+	<div class="panel-heading text-center"><h1> <i class="fa fa-briefcase"></i> - {LANG.category_id}</h1></div>
     <!-- BEGIN: cate -->
     <table class="table">
-		<td class="text-center"><a href ="{CATE.url_product}" >{CATE.name}</a></td>
+		<td><h3> <i class="fa fa-book"></i> - <a href ="{CATE.url_product}" >{CATE.name}</a></h3></td>
     </table>
     <!-- END: cate -->
 

@@ -3,25 +3,27 @@
 	<div class="row">
 		<div>
 			<div class="col-xs-8 col-sm-8 col-md-8 text-center">		
-				<img src="{ROWDETAIL.image}" alt="" class="avt">
+				<img src="{ROWDETAIL.image}" alt="" class="avt" style="width:200px; height:300px; border: red 2px solid ">
 			</div>
 			<div class="col-xs-8 col-sm-8 col-md-8 ">
-				<h3>{ROWDETAIL.name}</h3>
+				<h1>{ROWDETAIL.name}</h1>
 				</br>
 				<div class="container">
-				<p>
-					{LANG.price} : {ROWDETAIL.price} 
+				<h2>
+					  {ROWDETAIL.sale_price} {ROWDETAIL.price} {LANG.vnd} 
 					
-				</p>
+				</h2>
 				<p>{LANG.category_id}: {ROWCATE.name}</p>
 				</div>
 				<p>
-					<a href="{ROWDETAIL.url_order}" class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to Cart</a>
+					<a href="{ROWDETAIL.url_order}" class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Buy now</a>
                     
 				</p>
+                </br>
+                <p>{LANG.content}: {ROW.content}</p>
 			</div>
 			<div class="col-xs-8 col-sm-8 col-md-8">
-            <caption>Một số loại sách liên quan</caption>	
+            <h1 class="text-center">Một số loại sách liên quan</h1>	
             <!-- BEGIN: row_rd -->
 				<div class="thumbnail">
                 
@@ -32,13 +34,5 @@
 			</div>
 		</div>	
 	</div>
-	
-	</br>
-		<div class="panel-body text-center">
-			<h2>Nội dung chính</h2>
-		</div>
-		<div class="col-md-18 col-md-offset-3">
-			<p>{LANG.content}: {ROW.content}</p>
-	</div>
-</div>
+    </div>
 <!-- END: main -->
