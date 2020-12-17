@@ -18,12 +18,13 @@ $post['name'] = $nv_Request->get_title('name', 'post, get', '');
 $post['category_id'] = $nv_Request->get_int('category_id', 'post, get', 0);
 $post['active'] = $nv_Request->get_int('active', 'post, get', '');
 $cat_search_query = $active_search_query ='';
+
 /* CODE PHÂN TRANG PAGINATION*/
 //gán số lượng hiển thị mỗi trang
 $perpage = 5;
 //nhận biến page từ url
 $page = $nv_Request->get_int('page', 'get', 1);
-// đếm dòng dữ liệu trong bảng nv4_vi_student_info
+// đếm dòng dữ liệu trong bảng 
 try {
     //Tìm kiếm theo category_id
     if (!empty($post['category_id']))

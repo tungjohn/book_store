@@ -1,5 +1,0 @@
-[Sat, 28 Nov 2020 20:37:48 +0700] [localhost] [::1] [Notice(8): Undefined index: order.list] [FILE: /modules/product/admin/orderlist.php] [LINE: 15]
-[Sat, 28 Nov 2020 21:21:47 +0700] [localhost] [::1] [Notice(8): Undefined index: nv4_vi_book_order_detail.id] [FILE: /modules/product/admin/update_order.php] [LINE: 174]
-[Sat, 28 Nov 2020 22:05:38 +0700] [localhost] [::1] [Notice(8): A non well formed numeric value encountered] [FILE: /modules/product/admin/update_order.php] [LINE: 182]
-[Sat, 28 Nov 2020 23:04:33 +0700] [localhost] [::1] [Notice(8): Undefined index: total_price] [FILE: /modules/product/admin/update_order.php] [LINE: 120]
-[Sat, 28 Nov 2020 23:19:44 +0700] [localhost] [::1] [Notice(8): Undefined index: total_price] [FILE: /modules/product/admin/update_order.php] [LINE: 118]

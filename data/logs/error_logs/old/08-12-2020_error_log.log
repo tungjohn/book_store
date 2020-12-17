@@ -1,0 +1,6 @@
+[Tue, 08 Dec 2020 09:30:59 +0700] [localhost] [::1] [Notice(8): Undefined variable: name] [FILE: /modules/product/funcs/list.php] [LINE: 24]
+[Tue, 08 Dec 2020 09:30:59 +0700] [localhost] [::1] [Notice(8): Undefined variable: name] [FILE: /modules/product/funcs/list.php] [LINE: 25]
+[Tue, 08 Dec 2020 09:47:38 +0700] [localhost] [::1] [Notice(8): Undefined variable: name] [FILE: /modules/product/funcs/list.php] [LINE: 26]
+[Tue, 08 Dec 2020 10:06:40 +0700] [localhost] [::1] [Notice(8): Array to string conversion] [FILE: /modules/product/funcs/list.php] [LINE: 28]
+[Tue, 08 Dec 2020 10:23:36 +0700] [localhost] [::1] [Notice(8): Array to string conversion] [FILE: /modules/product/funcs/list.php] [LINE: 30]
+[Tue, 08 Dec 2020 10:29:52 +0700] [localhost] [::1] [Notice(8): Array to string conversion] [FILE: /modules/product/funcs/list.php] [LINE: 32]

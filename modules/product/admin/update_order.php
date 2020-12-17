@@ -207,7 +207,13 @@ if (!empty($error)) {
     $xtpl->parse('main.error');
 }
 /* END thông báo */
-$xtpl->parse('main');
+
+if ($post['id'] > 0)
+{
+    $xtpl->parse('main');
+}
+
+
 $contents = $xtpl->text('main');
 
 include NV_ROOTDIR . '/includes/header.php';

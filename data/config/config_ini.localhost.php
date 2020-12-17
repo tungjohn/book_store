@@ -5,7 +5,7 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
- * @Createdate Sun, 29 Nov 2020 13:51:25 GMT
+ * @Createdate Wed, 16 Dec 2020 15:26:02 GMT
  */
 
 if (!defined('NV_MAINFILE')) {
@@ -38,4 +38,4 @@ ini_set('session.gc_maxlifetime', '3600');
 ini_set('track_errors', '1');
 ini_set('user_agent', 'NV4');
 
-$iniSaveTime = 1606657885;
+$iniSaveTime = 1608132362;

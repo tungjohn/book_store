@@ -1,0 +1,5 @@
+[Thu, 17 Dec 2020 20:06:44 +0700] [localhost] [::1] [Notice(8): Undefined variable: alert] [FILE: /modules/product/funcs/cart.php] [LINE: 285]
+[Thu, 17 Dec 2020 20:06:44 +0700] [localhost] [::1] [Notice(8): Undefined variable: total_bill] [FILE: /modules/product/theme.php] [LINE: 100]
+[Thu, 17 Dec 2020 20:09:23 +0700] [localhost] [::1] [Notice(8): Undefined variable: html] [FILE: /modules/product/funcs/cart.php] [LINE: 68]
+[Thu, 17 Dec 2020 20:09:23 +0700] [localhost] [::1] [Notice(8): Undefined variable: html] [FILE: /modules/product/funcs/cart.php] [LINE: 84]
+[Thu, 17 Dec 2020 20:19:50 +0700] [localhost] [::1] [Notice(8): Undefined variable: alert] [FILE: /modules/product/funcs/cart.php] [LINE: 284]

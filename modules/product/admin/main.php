@@ -12,7 +12,11 @@ if (!defined('NV_IS_FILE_ADMIN')) {
     die('Stop!!!');
 }
 
+
+
 $page_title = $lang_module['main'];
+
+
 
 function check_input($data) {
     $data = trim($data);
