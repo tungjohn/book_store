@@ -5,7 +5,7 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
- * @Createdate Mon, 07 Dec 2020 02:12:30 GMT
+ * @Createdate Thu, 17 Dec 2020 17:37:12 GMT
  */
 
 if (!defined('NV_MAINFILE')) {
@@ -97,7 +97,7 @@ $global_config['site_lang']='vi';
 $global_config['site_timezone']='byCountry';
 $global_config['spadmin_add_admin']=1;
 $global_config['str_referer_blocker']=0;
-$global_config['timestamp']=1607307150;
+$global_config['timestamp']=1608226632;
 $global_config['two_step_verification']=0;
 $global_config['upload_alt_require']=1;
 $global_config['upload_auto_alt']=1;

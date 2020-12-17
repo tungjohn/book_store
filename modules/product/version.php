@@ -14,9 +14,9 @@ if (!defined('NV_MAINFILE')) {
 
 $module_version = [
     'name' => 'Samples',
-    'modfuncs' => 'main,detail,search,cart,category,list',
-    'change_alias' => 'main,detail,search,cart,category,list',
-    'submenu' => 'main,detail,search,cart,category,list',
+    'modfuncs' => 'main,detail,search,cart,category,list,order,product',
+    'change_alias' => 'main,detail,search,cart,category,list,order,product',
+    'submenu' => 'main,detail,search,cart,category,list,order,product',
     'is_sysmod' => 0,
     'virtual' => 1,
     'version' => '4.3.03',

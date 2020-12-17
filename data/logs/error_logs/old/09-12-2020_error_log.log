@@ -1,5 +1,0 @@
-[Wed, 09 Dec 2020 09:07:27 +0700] [localhost] [::1] [Notice(8): Array to string conversion] [FILE: /modules/product/funcs/list.php] [LINE: 33]
-[Wed, 09 Dec 2020 09:30:33 +0700] [localhost] [::1] [Notice(8): Undefined variable: post2] [FILE: /modules/product/funcs/list.php] [LINE: 32]
-[Wed, 09 Dec 2020 09:58:35 +0700] [localhost] [::1] [Warning(2): Illegal offset type] [FILE: /modules/product/funcs/list.php] [LINE: 25]
-[Wed, 09 Dec 2020 09:58:35 +0700] [localhost] [::1] [Warning(2): Illegal offset type] [FILE: /modules/product/funcs/list.php] [LINE: 26]
-[Wed, 09 Dec 2020 10:24:39 +0700] [localhost] [::1] [Notice(8): Array to string conversion] [FILE: /modules/product/funcs/list.php] [LINE: 40]
