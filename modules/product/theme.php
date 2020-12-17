@@ -5,26 +5,33 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
+
  * @Createdate Tue, 10 Nov 2020 06:56:08 GMT
  */
 
 if (!defined('NV_IS_MOD_ALBUM')) {
+
     die('Stop!!!');
 }
 
 /**
+
  * nv_theme_album_main()
+
  * 
  * @param mixed $array_data
  * @return
  */
+
 function nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total, $row_count)
 {
     global $module_info, $lang_module, $lang_global, $op, $module_name;
 
+
     $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
+
     
     if (!empty($array_data)) {
         $i = 1;
@@ -77,6 +84,7 @@ function nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total, $ro
     $xtpl->parse('main.cate.count');
     
 
+
     //------------------
     // Viết code vào đây
     //------------------
@@ -86,11 +94,15 @@ function nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total, $ro
 }
 
 /**
+
  * nv_theme_album_detail()
+
+
  * 
  * @param mixed $array_data
  * @return
  */
+
 function nv_theme_album_detail($row_detail,$row_cate, $row_rd)
 {
     global $module_info, $lang_module, $lang_global, $op, $module_name;
@@ -203,17 +215,22 @@ function nv_theme_album_product($row_cate,$row_product)
     // Viết code vào đây
     //------------------
     
+
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
 
 /**
+
  * nv_theme_album_search()
+
  * 
  * @param mixed $array_data
  * @return
  */
+
 function nv_theme_album_search($array_data)
+
 {
     global $module_info, $lang_module, $lang_global, $op;
 

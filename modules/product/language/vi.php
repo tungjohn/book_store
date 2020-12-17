@@ -5,7 +5,9 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
+
  * @Createdate Tue, 10 Nov 2020 06:56:08 GMT
+
  */
 
 if (!defined('NV_MAINFILE')) {
@@ -13,7 +15,9 @@ if (!defined('NV_MAINFILE')) {
 }
 
 $lang_translator['author'] = 'VINADES.,JSC (contact@vinades.vn)';
+
 $lang_translator['createdate'] = '10/11/2020, 06:56';
+
 $lang_translator['copyright'] = '@Copyright (C) 2020 VINADES.,JSC. All rights reserved';
 $lang_translator['info'] = '';
 $lang_translator['langtype'] = 'lang_module';
@@ -21,6 +25,7 @@ $lang_translator['langtype'] = 'lang_module';
 $lang_module['main'] = 'Trang chính';
 $lang_module['detail'] = 'Xem chi tiết';
 $lang_module['search'] = 'Tìm kiếm';
+
 
 
 $lang_module['name'] = 'Tên sách';
@@ -47,3 +52,4 @@ $lang_module['vnd'] = 'đ';
 $lang_module['error_quantity'] = 'Số lượng nhập ít nhất 1 quyển, nhiều nhất 10 quyển';
 $lang_module['error_quantity_str'] = 'Số lượng không được nhập chữ';
 $lang_module['error_quantity_float'] = 'Không được nhập dấu , && ,';
+

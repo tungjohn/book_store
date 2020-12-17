@@ -5,10 +5,12 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
+
  * @Createdate Tue, 10 Nov 2020 06:56:08 GMT
  */
 
 if (!defined('NV_IS_MOD_ALBUM')) {
+
     die('Stop!!!');
 }
 
@@ -16,6 +18,7 @@ $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 
 $array_data = [];
+
 $row_cate=[];
 
 /* CODE PHÂN TRANG PAGINATION*/
@@ -60,11 +63,14 @@ $row_cate = $db->query($sql)->fetchAll();
 // }
 // print_r($e);die();
 
+
 //------------------
 // Viết code vào đây
 //------------------
 
+
 $contents = nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total, $row_count);
+
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);
