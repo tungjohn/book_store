@@ -50,7 +50,7 @@ $array_data = $result->fetchAll();
 
 
 //Hiển thị danh sách
-$sql = "SELECT id, name FROM `nv4_vi_book_category";
+$sql = "SELECT id, name FROM `nv4_vi_book_category`";
 $row_cate = $db->query($sql)->fetchAll();
 // print_r($row_cate);die();
 

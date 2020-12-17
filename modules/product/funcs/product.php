@@ -20,7 +20,7 @@ $row_cate=[];
 
 $id = $nv_Request->get_int('id', 'post, get', '');
 
-$sql = "SELECT id, name FROM `nv4_vi_book_category";
+$sql = "SELECT id, name FROM `nv4_vi_book_category`";
 $row_cate = $db->query($sql)->fetchAll();
 
 $sql = "SELECT * FROM nv4_vi_book_product where category_id = " .$id;
