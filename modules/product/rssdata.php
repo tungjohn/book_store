@@ -5,7 +5,11 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
+<<<<<<< HEAD
+ * @Createdate Tue, 10 Nov 2020 06:56:08 GMT
+=======
  * @Createdate Sat, 31 Oct 2020 02:20:33 GMT
+>>>>>>> develop
  */
 
 if (!defined('NV_IS_MOD_RSS')) {

@@ -5,10 +5,12 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License: Not free read more http://nukeviet.vn/vi/store/modules/nvtools/
- * @Createdate Sat, 31 Oct 2020 02:20:33 GMT
+
+ * @Createdate Tue, 10 Nov 2020 06:56:08 GMT
  */
 
-if (!defined('NV_IS_MOD_SAMPLES')) {
+if (!defined('NV_IS_MOD_ALBUM')) {
+
     die('Stop!!!');
 }
 
@@ -21,7 +23,9 @@ $array_data = [];
 // Viết code vào đây
 //------------------
 
-$contents = nv_theme_samples_search($array_data);
+
+$contents = nv_theme_album_search($array_data);
+
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

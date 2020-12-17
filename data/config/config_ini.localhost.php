@@ -5,7 +5,6 @@
  * @Author VINADES.,JSC <contact@vinades.vn>
  * @Copyright (C) 2020 VINADES.,JSC. All rights reserved
  * @License GNU/GPL version 2 or any later version
- * @Createdate Thu, 17 Dec 2020 13:32:39 GMT
  */
 
 if (!defined('NV_MAINFILE')) {
@@ -27,7 +26,7 @@ $sys_info['ftp_support'] = true;
 $sys_info['string_handler'] = 'mb';
 $sys_info['support_cache'] = [];
 $sys_info['php_compress_methods'] = ['deflate' => 'gzdeflate', 'gzip' => 'gzencode', 'x-gzip' => 'gzencode', 'compress' => 'gzcompress', 'x-compress' => 'gzcompress'];
-$sys_info['server_headers'] = ['server' => 'Apache/2.4.43 (Win64) OpenSSL/1.1.1g PHP/7.4.6','x-powered-by' => 'PHP/7.4.6','content-length' => '0','content-type' => 'text/html; charset=UTF-8'];
+$sys_info['server_headers'] = ['server' => 'Apache/2.4.46 (Win64) OpenSSL/1.1.1g PHP/7.2.34','x-powered-by' => 'PHP/7.2.34','content-length' => '0','content-type' => 'text/html; charset=UTF-8'];
 $sys_info['ip6_support'] = true;
 
 ini_set('display_errors', '0');
@@ -38,4 +37,6 @@ ini_set('session.gc_maxlifetime', '3600');
 ini_set('track_errors', '1');
 ini_set('user_agent', 'NV4');
 
-$iniSaveTime = 1608211959;
+
+$iniSaveTime = 1605672706;
+
