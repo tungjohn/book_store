@@ -219,7 +219,7 @@ if(!empty($post['submit']))
     } else {
         $error[] = 'Bạn chưa nhập số lượng sản phẩm';
     }
-
+    
 
     if (empty($error))
     {
