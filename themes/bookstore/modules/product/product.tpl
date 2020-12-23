@@ -6,7 +6,7 @@
 	<div class="panel-heading text-center"><h1> <i class="fa fa-briefcase"></i> - {LANG.category_id}</h1></div>
     <!-- BEGIN: cate -->
     <table class="table">
-		<td><h3> <i class="fa fa-book"></i> - <a href ="{CATE.url_product}" >{CATE.name}</a></h3></td>
+		<td><h3> <i class="fa fa-book"></i> - <a href ="{CATE.url_product}" >{CATE.name} ({CATE.num})</a></h3></td>
     </table>
     <!-- END: cate -->
 
@@ -15,34 +15,35 @@
 
 <div class="col-xs-19 col-sm-19 col-md-19">
 <!-- BEGIN: product -->
-<div class="col-xs-12 col-sm-12 col-md-12 text-center">
+<div class="col-xs-8 col-sm-8 col-md-8 text-center">
 <div class="panel panel-default"  >
 <div class="thumbnail">
-	<div class="panel-body" style="height:50px" >
-		<h3 class="name">{LANG.name}: {PRODUCT.name}</h3>
-	</div>
-	</div>
-	
-	<div class="thumbnail">
-		<div class="panel">
-			<a href="{PRODUCT.url_detail}" >
-				<img src="{PRODUCT.image}" style="border: 1px solid yellow; height:300px">
-			</a>
-		</div>
-	</div>
-		
-	<div class="caption">
-			<div class="panel-footer">
-				<h3>{LANG.price} : {PRODUCT.price} </h3>
-			</p></div>
-			<div class="text-center">
-				<a href="" class="btn btn-danger" role="button" onclick="nv_add_to_cart({PRODUCT.id}, 'add')"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-			</div>
-			</div>
-		
-	
-	</div>
-		
+    <div class="thumbnail item" >
+        <div class="panel item-img" >
+                <img src="{PRODUCT.image}" class="img-responsive">
+                <div class="product-thumb-info-act">
+                    <div class="icon">
+                        <a href="{PRODUCT.url_detail}" class="detail" title="Chi tiết quyến sách">
+                            <span><i class="fa fa-external-link"></i></span>
+                        </a>
+                        <a href="" role="button" onclick="nv_add_to_cart({PRODUCT.id}, 'add')" title="Giỏ hàng">
+                            <span><i class="fa fa-shopping-cart"></i></span>
+                        </a>    
+                    </div>
+                </div>
+        </div>
+    </div>
+   
+    
+    <div class="panel">
+        <div class="panel-body" style="height:50px" >
+            <div><a href="{PRODUCT.url_detail}" class="detail" title="{LANG.name}"><h3 class="name_product">{PRODUCT.name}</h3></a></div>
+            <div><h3 title="{LANG.price}">{PRODUCT.price} {LANG.vnd}</h3></div>
+        </div>  
+    </div>
+            
+    </div>
+     </div>
 </div>
 	
 <!-- END: product -->	

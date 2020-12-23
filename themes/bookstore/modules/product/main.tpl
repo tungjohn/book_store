@@ -7,10 +7,8 @@
     <!-- BEGIN: cate -->
     <table class="table">
 		<td>
-            <h3> <i class="fa fa-book"></i> - <a href ="{CATE.url_product}">{CATE.name} </a>
-            <!-- BEGIN: count --> ({COUNT.category_id}) <!-- END: count -->
-            </h3>
-           
+            <h3> <i class="fa fa-book"></i> - <a href ="{CATE.url_product}">{CATE.name} </a> <span class="text-red">({CATE.num})</span></h3>
+        </td>
     </table>
     <!-- END: cate -->
 
@@ -19,43 +17,44 @@
 
 <div class="col-xs-19 col-sm-19 col-md-19">
 <!-- BEGIN: loop -->
-<div class="col-xs-12 col-sm-12 col-md-12 text-center">
-<div class="panel panel-default"  >
-    <div class="thumbnail">
-    	<div class="panel-body" style="height:50px" >
-    		<h3 class="name">{LANG.name}: {ROW.name}</h3>
-    	</div>
-	</div>
-	
-	<div class="thumbnail">
-		<div class="panel">
-			<a href="{ROW.url_detail}" >
-				<img src="{ROW.image}" style="border: 1px solid red; height:300px">
-			</a>
-		</div>
-	</div>
-		
-	<div class="caption">
-			<div class="panel-footer">
-				<h3>{LANG.price} : {ROW.price} </h3>
-			</p></div>
-			<div class="text-center">
-				
-				<a href="" class="btn btn-danger" role="button" onclick="nv_add_to_cart({ROW.id}, 'add')"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-			</div>
-	</div>
-            
-		
-	
-	</div>
-		
+<div class="col-xs-8 col-sm-8 col-md-8 text-center">
+<div class="thumbnail">
+        <div class="thumbnail item">
+            <div class="panel item-img" >
+                    <img src="{ROW.image}" class="img-responsive">
+                    <div class="product-thumb-info-act">
+                        <div class="icon">
+                            <a href="{ROW.url_detail}" class="detail" title="Chi tiết quyến sách">
+                                <span><i class="fa fa-external-link"></i></span>
+                            </a>
+                            <a href="" role="button" class="cart"  onclick="nv_add_to_cart({ROW.id}, 'add')" title="Giỏ hàng">
+                                <span><i class="fa fa-shopping-cart"></i></span>
+                            </a>    
+                        </div>
+                    </div>
+                    
+            </div>
+        </div>  
+
+        <div class="panel">
+            <div style="height:50px"><h3 class="name"><a href="{ROW.url_detail}" class="detail" title="Chi tiết quyến sách">{ROW.name} </a></h3></div>
+            <div><h3>{ROW.price} {LANG.vnd} </h3></div>
+       
+    </div>
+    
+</div>
 </div>
 	
 <!-- END: loop -->
-<!-- BEGIN: page -->
-    {GENERATE_PAGE}
-<!-- END: page -->	
+	
 </div>
+
+<div class="text-center">
+        <!-- BEGIN: page -->
+            {GENERATE_PAGE}
+        <!-- END: page -->
+    </div>
+
 
 <script type="text/javascript">
 function nv_add_to_cart(id, action) {
