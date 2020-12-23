@@ -23,7 +23,7 @@ $row_cate=[];
 
 /* CODE PHÂN TRANG PAGINATION*/
 //gán số lượng hiển thị mỗi trang
-$perpage = 4;
+$perpage = 6;
 //nhận biến page từ url
 $page = $nv_Request->get_int('page', 'get', 1);
 
@@ -47,29 +47,19 @@ $sql = $db->sql();
 $result= $db->query($sql);
 $array_data = $result->fetchAll();
 
-
-
 //Hiển thị danh sách
 $sql = "SELECT id, name FROM `nv4_vi_book_category`";
-$row_cate = $db->query($sql)->fetchAll();
-// print_r($row_cate);die();
+$qurey_cate = $db->query($sql);
+$row_cate = [];
+while ($cate = $qurey_cate->fetch()) {
+    $sql = "SELECT COUNT(*) FROM `nv4_vi_book_product` where `category_id` = " . $cate['id'];
+    $row_count = $db->query($sql)->fetchColumn();
+    //có từng số lượng sản phẩm theo cat id r. gans lai vao cat ddo
+    $cate['num'] = $row_count;
+    $row_cate[$cate['id']] = $cate;
+} // co num r thif hien thi ra css lai
 
-//Đếm id danh mục
-// try {
-//     $sql = "SELECT id, COUNT(category_id) FROM `nv4_vi_book_product` where `category_id` = " . $row_cate['id'];
-//     //đếm số bản ghi
-//     $row_count = $db->query($sql)->fetchColumn();
-// } catch (PDOException $e) {
-// }
-// print_r($e);die();
-
-
-//------------------
-// Viết code vào đây
-//------------------
-
-
-$contents = nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total, $row_count);
+$contents = nv_theme_album_main($array_data,$row_cate, $perpage, $page, $total);
 
 
 include NV_ROOTDIR . '/includes/header.php';

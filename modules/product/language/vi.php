@@ -36,7 +36,9 @@ $lang_module['address'] = 'Địa chỉ';
 $lang_module['quantity'] = 'Số lượng';
 $lang_module['img'] = 'Ảnh';
 $lang_module['total_price'] = 'Tổng số tiền';
+$lang_module['into_money'] = 'Thành tiền';
 $lang_module['order_note'] = 'Ý kiến khách hàng';
+$lang_module['payment_method'] = 'Phương thức thanh toán';
 
 $lang_module['error_name_user'] = 'Chưa nhập tên';
 $lang_module['error_phone'] = 'Chưa nhập số điện thoại';
