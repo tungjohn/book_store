@@ -2,6 +2,9 @@
 <!-- BEGIN: alert -->
     <div class='alert alert-info' role="alert">{ALERT}</div>
 <!-- END: alert -->
+<!-- BEGIN: success -->
+    <div class='alert alert-info' role="alert">{SUCCESS}</div>
+<!-- END: success -->
 <h2>Danh sách đơn hàng</h2>
 <!-- search -->
     <form action="{NV_BASE_ADMINURL}index.php?" method="get" name="search_orders">

@@ -1,5 +1,10 @@
 <!-- BEGIN: list -->
+<!-- BEGIN: success -->
+    <div class='alert alert-info' role="alert">{SUCCESS}</div>
+<!-- END: success -->
 <div class="container">
+  
+    <h1>Tìm kiếm:</h1>
     <!-- search -->
     <form action="{NV_BASE_ADMINURL}index.php?" method="get" name="search_products">
       <input type="hidden" name="{NV_LANG_VARIABLE}" value="{NV_LANG_DATA}">
@@ -48,19 +53,23 @@
         </div>
     </form>
     <!-- search -->
+  
+  <!-- list product -->
+<div class="well">
   <div class="table-responsive">          
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Tên sản phẩm</th>
-        <th>Ảnh sản phẩm</th>
-        <th>Giá sản phẩm</th>
-        <th>Mô tả sản phẩm</th>
-        <th>Slug</th>
-        <th>Danh mục</th>
-        <th>Trạng Thái</th>
-        <th>Hành Động</th>
+        <th class="text-center">ID</th>
+        <th class="text-center">Ảnh sản phẩm</th>
+        <th class="text-center">Tên sản phẩm</th>
+        
+        <th class="text-center">Giá sản phẩm</th>
+        
+        
+        <th class="text-center">Danh mục</th>
+        <th class="text-center">Trạng Thái</th>
+        <th class="text-center">Hành Động</th>
         
       </tr>
     </thead>
@@ -68,11 +77,12 @@
     <!-- BEGIN: dataLoop -->
       <tr>
         <td>{DATA.id}</td>
+        
+        <td class="text-center"><img src="{DATA.image}" style="width: 80px;"></td>
         <td>{DATA.name}</td>
-        <td><img src="{DATA.image}"</td>
         <td>{DATA.price}</td>
-        <td>{DATA.content}</td>
-        <td>{DATA.slug}</td>
+        
+        
         <td>{DATA.category}</td>
         <td>{DATA.active}</td>
         <td class="text-center">
@@ -89,12 +99,13 @@
     <!-- END: dataLoop -->
     </tbody>
   </table>
+  <!-- list product -->
   </div>
   <!-- BEGIN: page -->
     {GENERATE_PAGE}
   <!-- END: page -->
+  </div>
 </div>
-
 <script type='text/javascript'>
 
       $(document).ready(function() {
