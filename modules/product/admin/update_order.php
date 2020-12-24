@@ -36,6 +36,12 @@ $post['payment_method'] = $nv_Request->get_int('payment_method', 'post', 0);
 $post['order_note'] = $nv_Request->get_title('order_note', 'post', '');
 $post['active'] = $nv_Request->get_title('active', 'post', '');
 
+//lấy giá trị của mảng số lượng sp và mảng id sản phẩm
+$product_quantities = $nv_Request->get_typed_array('product_quantity','post', '');
+$product_ids = $nv_Request->get_typed_array('product_ids','post', '');
+
+
+
 /* EDIT PRODUCT */
         //lấy dữ liệu trong database in ra form sửa
         try {
@@ -43,7 +49,7 @@ $post['active'] = $nv_Request->get_title('active', 'post', '');
             {
                 $sql = "SELECT * FROM `nv4_vi_book_orders` WHERE id =" . $post['id'];
                 $post = $db->query($sql)->fetch();
-                
+                $post['total_price_format'] = number_format($post['total_price']);
                 
             }
         } catch (PDOException $e) {
@@ -53,6 +59,8 @@ $post['active'] = $nv_Request->get_title('active', 'post', '');
         }
         
 /* END EDIT PRODUCT */
+
+/* UPDATE ORDER */
 if(!empty($post['submit']))
 {
     if (empty($post['name']))
@@ -85,28 +93,67 @@ if(!empty($post['submit']))
         $error[] = 'Bạn chưa nhập trạng thái đơn hàng';
     }
 
+    //xử lý mảng product_ids và product_quantity
+    if (!empty($product_ids) && !empty($product_quantities))
+    {
+        $total_price_update = 0;
+        foreach($product_ids as $product_ids_key => $productId) {
+            //
+            $quantity = $product_quantities[$product_ids_key];
+            if ($quantity <= 0)
+            {
+                $error[] = 'Số lượng sản phẩm không đúng';
+            }
+            $sql = "SELECT * FROM `nv4_vi_book_product` WHERE id=" . $productId;
+            $product = $db->query($sql)->fetch();
+            $totalPriceProduct = $quantity*$product['price'];
+            $total_price_update += $totalPriceProduct;
+        }
+    } else {
+        $error[] = 'Bạn chưa nhập số lượng sản phẩm';
+    }
+
     if (empty($error))
     {
         if ($post['id'] > 0) 
         {
-            $sql = "UPDATE `nv4_vi_book_orders` SET `name`=:name,`email`=:email,`phone`=:phone,`address`=:address,`order_note`=:order_note,`payment_method`=:payment_method, `active`=:active  WHERE `id`=" . $post['id'];
+            //update bảng orders
+            $sql = "UPDATE `nv4_vi_book_orders` SET `name`=:name,`email`=:email,`phone`=:phone,`address`=:address,`total_price`=:total_price,`order_note`=:order_note,`payment_method`=:payment_method, `active`=:active, `updated_at`=:updated_at WHERE `id`=" . $post['id'];
                 $s = $db->prepare($sql);
                 $s->bindParam('name', $post['name']);
                 $s->bindParam('email', $post['email']);
                 $s->bindParam('phone', $post['phone']);
                 $s->bindParam('address', $post['address']);
+                $s->bindValue('total_price', $total_price_update);
                 $s->bindParam('order_note', $post['order_note']);
                 $s->bindParam('payment_method', $post['payment_method']);
                 $s->bindParam('active', $post['active']);
-                $s->execute();
-                $alert = 'Sửa Thành Công';
+                $s->bindValue('updated_at', NV_CURRENTTIME);
+                if ($s->execute())
+                {
+                    //update bảng order_detail
+                    foreach($product_ids as $product_ids_key => $productId) {
+                        //
+                        $quantity = $product_quantities[$product_ids_key];
+                        $sql = "UPDATE `nv4_vi_book_order_detail` SET `quantity`=:quantity WHERE `order_id`=" . $post['id'] . " AND `product_id`=" . $productId;
+                        $s = $db->prepare($sql);
+                        $s->bindValue('quantity', $quantity);
+                        $s->execute();
+                        nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=orderlist&amp;success=1&amp;order_id=' . $post['id']);
+                            
+                        
+                    }
+                    $alert = 'Sửa Thành công';
+                }
+                
+                
         }
     }
 }
 
 /* lấy id và action để kiểm tra delete sản phẩm khỏi đơn hàng */
-$post['action'] = $nv_Request->get_title('action', 'get', '');
-$post['order_id'] = $nv_Request->get_int('order_id', 'get', '');
+
+$post['order_id'] = $nv_Request->get_int('order_id', 'post, get', '');
 $post['product_id'] = $nv_Request->get_int('product_id', 'get', 0);
 
 $checksess = $nv_Request->get_title('checksess', 'post, get', '');
@@ -131,9 +178,35 @@ if (!empty($post['action']) && $post['action'] == 'delete' && $post['product_id'
     }
     $alert = 'Xóa thành công';
     
+    
 }
 /* END DELETE */
 
+/* Ajax thêm sp vào đơn hàng */
+$add_product = $nv_Request->get_int('id', 'post', 0);
+$price = $nv_Request->get_int('price', 'post', 0);
+$total_price = $nv_Request->get_int('total_price', 'post', 0);
+if ($add_product > 0) {
+    $sql = "INSERT INTO `nv4_vi_book_order_detail`(`order_id`, `product_id`, `quantity`, `price`) VALUES (:order_id, :product_id, :quantity, :price)";
+    $s = $db->prepare($sql);
+    $s->bindParam('order_id', $post['order_id']);
+    $s->bindParam('product_id', $add_product);
+    $s->bindValue('quantity', 1);
+    $s->bindParam('price', $price);
+
+    if ($s->execute())
+    {
+        $sql = "UPDATE `nv4_vi_book_orders` SET `total_price`=:total_price_update  WHERE id=:order_id";
+        $s = $db->prepare($sql);
+        $s->bindParam('order_id', $post['order_id']);
+        $s->bindValue('total_price_update', ($total_price + $price));
+        $s->execute();
+        /* nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=update_order&amp;action=edit&amp;id=' . $post['order_id']); */
+        
+    }
+
+}
+/* End Ajax */
 
 $xtpl = new XTemplate('update_order.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
@@ -161,7 +234,8 @@ foreach ($array_active as $key => $value)
     $xtpl->parse('main.activeLoop');
 }
 /* End active */
-/* Xuất giá trị payment_method ra site */
+
+/* In giá trị payment_method ra site */
 $array_payment = [];
 $array_payment[1] = 'Tiền mặt';
 $array_payment[2] = 'Chuyển khoản';
@@ -177,19 +251,32 @@ foreach ($array_payment as $key => $value)
 }
 /* End payment_method */
 
+/* In danh sách sản phẩm trong nút thêm sản phẩm */
+$sql = "SELECT id,name,image,price FROM `nv4_vi_book_product`";
+$result = $db->query($sql);
+foreach ($result as $product)
+{
+    $product['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/'. $module_name . '/' . $product['image'];
+    $product['format_price'] = number_format($product['price']);
+
+    $xtpl->assign('PRODUCT', $product);
+    $xtpl->parse('main.productLoop');
+}
+/* End in danh sách sản phẩm */
+
 //Lấy dữ liệu của bảng orders và order_detail đổ ra bảng sản phẩm trong đơn hàng
 // detail.order_id, detail.product_id, detail.quantity, detail.price, product.name, product.image, 
 $sql = "SELECT * FROM `nv4_vi_book_order_detail` LEFT JOIN `nv4_vi_book_product` ON nv4_vi_book_order_detail.product_id = nv4_vi_book_product.id WHERE `order_id`=" . $post['id'];
 $result = $db->query($sql);
-$total_price = 0;
+
 foreach ($result as $data)
 {
     
     $data['image'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/'. $module_name . '/' . $data['image'];
     $data['line_price'] = number_format($data['price'] * $data['quantity']);
-    $data['price'] = number_format($data['price']);
+    $data['format_price'] = number_format($data['price']);
     $data['url_edit'] = '#';
-    $data['url_delete'] = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=update_order&amp;action=delete&amp;order_id=' . $data['order_id'] . '&product_id=' . $data['product_id'] . '&total_price_update=' . ($post['total_price'] - (float)preg_replace("/[^0-9.]+/", "", $data['line_price'])) . '&checksess=' . md5($data['id'] . NV_CHECK_SESSION);
+    $data['url_delete'] = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=update_order&amp;action=delete&amp;order_id=' . $data['order_id'] . '&product_id=' . $data['product_id'] . '&total_price_update=' . ($post['total_price'] - ($data['price'] * $data['quantity'])) . '&checksess=' . md5($data['id'] . NV_CHECK_SESSION);
     /* echo "<pre>";
     print_r($data);
     echo "</pre>";
@@ -208,12 +295,13 @@ if (!empty($error)) {
 }
 /* END thông báo */
 
-if ($post['id'] > 0)
-{
-    $xtpl->parse('main');
-}
+/* if ($post['id'] > 0)
+{ */
+    
+/* } */ 
+ 
 
-
+$xtpl->parse('main');
 $contents = $xtpl->text('main');
 
 include NV_ROOTDIR . '/includes/header.php';

@@ -18,6 +18,7 @@ $post['name'] = $nv_Request->get_title('name', 'post, get', '');
 $post['category_id'] = $nv_Request->get_int('category_id', 'post, get', 0);
 $post['active'] = $nv_Request->get_int('active', 'post, get', '');
 $cat_search_query = $active_search_query ='';
+$success = $nv_Request->get_int('success', 'get', 0);
 
 /* CODE PHÂN TRANG PAGINATION*/
 //gán số lượng hiển thị mỗi trang
@@ -134,8 +135,8 @@ if (!empty($post['category_id']))
 $db->select('*')
     ->limit($perpage)
     ->offset(($page - 1) * $perpage)
-    ->where('name LIKE ' . "'%". $post['name'] . "%'" . $cat_search_query . $active_search_query);
-    
+    ->where('name LIKE ' . "'%". $post['name'] . "%'" . $cat_search_query . $active_search_query)
+    ->order('id DESC');
     $sql = $db->sql();
     $result = $db->query($sql);
 /* End */
@@ -158,6 +159,13 @@ foreach ($result as $data)
     $xtpl->parse('list.dataLoop');
 }
 
+if ($success == 1)
+{   
+    $product_id = $nv_Request->get_int('product_id', 'get', 0);
+    $success_info = 'Sửa thông tin sản phẩm id ' . $product_id . ' thành công';
+    $xtpl->assign('SUCCESS', $success_info);
+    $xtpl->parse('list.success');
+}
 
 /* Link pagination */
 $base_url = NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list';

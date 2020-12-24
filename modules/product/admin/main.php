@@ -135,6 +135,7 @@ if(!empty($post['submit']))
         } 
     }  
     //Kiểm tra nếu không có file tải lên hoặc không có ảnh cũ thì hiển thị lỗi
+    $post['oldImage'] = $nv_Request->get_title('oldImage', 'post', '');
     if (empty($newname) && empty($nv_Request->get_title('oldImage', 'post', '')))
     {
         $error[] = 'Bạn chưa chọn hình ảnh sản phẩm';
@@ -166,7 +167,7 @@ if(!empty($post['submit']))
                         die();
                     }
                     $alert = 'Sửa Thành Công';
-                    nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
+                    nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list&amp;success=1&amp;product_id=' . $post['id']);
             } else if (empty($newname))
                     {
                         try {
@@ -187,7 +188,7 @@ if(!empty($post['submit']))
                                 die();
                             }
                             $alert = 'Sửa Thành Công';
-                            nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list');
+                            nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=list&amp;success=1&amp;product_id=' . $post['id']);
                     }
             
         } else {
@@ -239,6 +240,10 @@ if (!empty($post['image']))
 {
     $xtpl->parse('main.image');
 }
+if (!empty($post['oldImage']))
+{
+    $xtpl->parse('main.oldImage');
+}
 
 $sql = "SELECT id,name FROM `nv4_vi_book_category`";
 $result = $db->query($sql);
@@ -248,6 +253,23 @@ foreach ($result as $data)
     $xtpl->assign('DATA', $data);
     $xtpl->parse('main.loopCat');
 }
+
+/* Xuất giá trị active ra site */
+$array_active = [];
+$array_active[1] = 'Hết Hàng';
+$array_active[2] = 'Có Hàng';
+
+foreach ($array_active as $key => $value)
+{
+    $xtpl->assign('ACTIVE', [
+        'key' => $key,
+        'value' => $value,
+        'selected' => ($post['active'] == $key) ? 'selected' : '',
+    ]);
+    $xtpl->parse('main.activeLoop');
+}
+/* End active */
+
 
 if (!empty($alert)) {
     $xtpl->assign('ALERT', $alert);

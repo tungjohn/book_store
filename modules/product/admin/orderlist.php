@@ -20,7 +20,7 @@ $post['phone'] = $nv_Request->get_title('phone', 'get', '');
 
 $post['payment_method'] = $nv_Request->get_int('payment_method', 'get', 0);
 $post['active'] = $nv_Request->get_int('active', 'get', '');
-
+$success = $nv_Request->get_int('success', 'get', 0);
 /* CODE PHÂN TRANG PAGINATION*/
 //gán số lượng hiển thị mỗi trang
 $perpage = 5;
@@ -129,8 +129,8 @@ foreach ($array_payment as $key => $value)
 $db->select('*')
     ->limit($perpage)
     ->offset(($page - 1) * $perpage)
-    ->where('name LIKE ' . "'%". $post['name']  . "%'" . $email_search_query . $phone_search_query . $payment_method_search_query . $active_search_query);
-
+    ->where('name LIKE ' . "'%". $post['name']  . "%'" . $email_search_query . $phone_search_query . $payment_method_search_query . $active_search_query)
+    ->order('id DESC');
     
     $sql = $db->sql();
     $result = $db->query($sql);
@@ -194,6 +194,14 @@ if (!empty($alert))
 {
     $xtpl->assign('ALERT', $alert);
     $xtpl->parse('list.alert');
+}
+
+if ($success == 1)
+{   
+    $order_id = $nv_Request->get_int('order_id', 'get', 0);
+    $success_info = 'Sửa thông tin đơn hàng id ' . $order_id . ' thành công';
+    $xtpl->assign('SUCCESS', $success_info);
+    $xtpl->parse('list.success');
 }
 
 $xtpl->parse('list');
