@@ -9,6 +9,7 @@
 <!-- END: alert -->
 <form action="{NV_BASE_SITEURL}index.php?{NV_LANG_VARIABLE}={NV_LANG_DATA}&amp;{NV_NAME_VARIABLE}={MODULE_NAME}&amp;{NV_OP_VARIABLE}={OP}" method="post">
 
+    <div class="col-xs-18 col-sm-18 col-md-18">
     <!-- BEGIN: dataLoop -->
     
       <div class="media">
@@ -19,19 +20,19 @@
         </div>
         <div class="media-body">
             <h2 class="media-heading">{VAL_CART_ITEM.name}</h2>
-            <h4>Giá tiền: <i>{VAL_CART_ITEM.format_price}</i> đ</h4>
+            <h4>{LANG.price}: <i>{VAL_CART_ITEM.format_price}</i> {LANG.vnd}</h4>
             <i class="product_price" style="display:none;">{VAL_CART_ITEM.price}</i>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6 ">
                         <div class="input-group">
                             <input type="hidden" class="form-control" name="product_ids[]" aria-label="..." value="{VAL_CART_ITEM.id}"/>
                             <span class="input-group-addon">
-                                Số lượng:
+                                {LANG.quantity}:
                             </span>
                             <input type="number" class="form-control" name="product_quantity[]" aria-label="..." value="{VAL_CART_ITEM.quantity}" min=1 max=5 />
                         </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-md-offset-3">
                         <div class="input-group">
                         
                             <a href="{DATA.url_delete}" class="remove btn btn-danger" onclick="nv_remove_from_cart({VAL_CART_ITEM.id}, 'remove')">
@@ -43,7 +44,7 @@
                 </div><!-- /.row -->
             
             <h1 class="text-right product_price_total" >
-                Thành tiền: {VAL_CART_ITEM.format_price} đ
+                {LANG.into_money}: {VAL_CART_ITEM.format_price} {LANG.vnd}
                 
             </h1>
         </div>
@@ -51,32 +52,37 @@
     
     <hr>
     <!-- END: dataLoop -->
-        <h2>Tổng tiền đơn hàng: <b id="payment-price">{TOTAL_BILL}</b> đ</h2>
+        <h2>{LANG.total_price}: <b id="payment-price">{TOTAL_BILL}</b> {LANG.vnd}</h2>
     <hr>
-
-    <h1>Thông tin khách hàng</h1>
+    
+    </div>
+    
+    <div class="col-xs-6 col-sm-6 col-md-6">
+    <div class="panel panel-danger">
+        <div class="panel-body">
+            <h1>Thông tin khách hàng</h1>
         <div class="row">
-            <div class="form-group col-md-6">
-                <label for="">Tên khách hàng: </label>
+            <div >
+                <label for=""><i class="fa fa-star" aria-hidden="true"></i> {LANG.name_user}: </label>
                 <input type="text" class="form-control" name="name" value="{POST.name}">
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
-                <label for="">Email: </label>
+            <div>
+                <label for=""><i class="fa fa-star" aria-hidden="true"></i> {LANG.email}: </label>
                 <input type="text" class="form-control" name="email" value="{POST.email}">
             
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
-                <label for="">Số điện thoại: </label>
+            <div>
+                <label for=""><i class="fa fa-star" aria-hidden="true"></i> {LANG.phone}: </label>
                 <input type="text" class="form-control" name="phone" value="{POST.phone}">
             </div>
         </div>
         <div class="row">
-            <div class="form-group col-md-6">
-                    <label for="">Địa chỉ: </label>
+            <div>
+                    <label for=""> <i class="fa fa-star" aria-hidden="true"></i> {LANG.address}: </label>
 
                     <select name="province" id="province" class="form-control">
                         <option value="">---Chọn Thành Phố---</option>
@@ -87,7 +93,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
+                <div >
                     <select name="district" id="district" class="form-control">
                         <option value="">---Chọn Quận---</option>
                         
@@ -96,7 +102,7 @@
             </div>
             <div class="row">
 
-                <div class="form-group col-md-6">
+                <div>
                     <select name="ward" id="ward" class="form-control">
                         <option value="">---Chọn Phường---</option>
                         
@@ -104,14 +110,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="">Lưu ý đơn hàng: </label>
+                <div >
+                    <label for="">{LANG.order_note}: </label>
                     <textarea class="form-control" name="order_note">{POST.order_note}</textarea>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="">Phương Thức Thanh Toán: </label>
+                <div>
+                    <label for=""><i class="fa fa-star" aria-hidden="true"></i> {LANG.payment_method}: </label>
                     <select name="payment_method" class="form-control">
                         <option value="">Chọn Phương Thức</option>
                         <!-- BEGIN: pmLoop -->
@@ -122,6 +128,9 @@
             </div>
             
         <div class="text-center" ><input style="margin-top:10px;" class="btn btn-primary" name="submit" type="submit" value="Đặt hàng" /></div>
+        </div>
+     </div>
+     </div>
     </form>
 <link rel="stylesheet" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/select2/select2.min.css">
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/select2/select2.min.js"></script>

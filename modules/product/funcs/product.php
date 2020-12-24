@@ -21,7 +21,15 @@ $row_cate=[];
 $id = $nv_Request->get_int('id', 'post, get', '');
 
 $sql = "SELECT id, name FROM `nv4_vi_book_category`";
-$row_cate = $db->query($sql)->fetchAll();
+$qurey_cate = $db->query($sql);
+$row_cate = [];
+while ($cate = $qurey_cate->fetch()) {
+    $sql = "SELECT COUNT(*) FROM `nv4_vi_book_product` where `category_id` = " . $cate['id'];
+    $row_count = $db->query($sql)->fetchColumn();
+    //có từng số lượng sản phẩm theo cat id r. gans lai vao cat ddo
+    $cate['num'] = $row_count;
+    $row_cate[$cate['id']] = $cate;
+} // co num r thif hien thi ra css lai
 
 $sql = "SELECT * FROM nv4_vi_book_product where category_id = " .$id;
 $row_product = $db->query($sql)->fetchAll();
