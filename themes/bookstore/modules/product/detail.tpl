@@ -3,7 +3,7 @@
 	<div class="row">
 		<div>
 			<div class="col-xs-8 col-sm-8 col-md-8 text-center">		
-				<img src="{ROWDETAIL.image}" alt="" class="avt" style="width:200px; height:300px; border: red 2px solid ">
+				<img src="{ROWDETAIL.image}" alt="" class="avt" style=" border: red 1px solid ">
 			</div>
 			<div class="col-xs-8 col-sm-8 col-md-8 ">
 				<h1>{ROWDETAIL.name}</h1>
