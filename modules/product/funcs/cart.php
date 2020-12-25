@@ -205,6 +205,7 @@ if(!empty($post['submit']))
         $sql = "SELECT title FROM `nv4_vi_location_ward` WHERE id =" . $post['ward'];
         $ward = $db->query($sql)->fetch();
     }
+    //xử lý mảng product_id và product_quantity
     if (!empty($product_ids) && !empty($product_quantities))
     {
         $post['total_price'] = 0;

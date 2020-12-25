@@ -26,7 +26,7 @@
     </div>
     <div class="form-group ">
         <label for="">Giá: </label>
-        <input type="number" class="form-control" name="price" value="{POST.price}">
+        <input type="number" class="form-control number-separator" name="price" value="{POST.price}">
     </div>
     
     <div class="form-group">

@@ -125,6 +125,8 @@
 </form>
 <link rel="stylesheet" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/select2/select2.min.css">
 <script type="text/javascript" src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/select2/select2.min.js"></script>
+
+
 <script type='text/javascript'>
 function updateCart() {
                 //gán biến total=0
