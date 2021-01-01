@@ -117,34 +117,46 @@ if(!empty($post['submit']))
     {
         if ($post['id'] > 0) 
         {
-            //update bảng orders
-            $sql = "UPDATE `nv4_vi_book_orders` SET `name`=:name,`email`=:email,`phone`=:phone,`address`=:address,`total_price`=:total_price,`order_note`=:order_note,`payment_method`=:payment_method, `active`=:active, `updated_at`=:updated_at WHERE `id`=" . $post['id'];
-                $s = $db->prepare($sql);
-                $s->bindParam('name', $post['name']);
-                $s->bindParam('email', $post['email']);
-                $s->bindParam('phone', $post['phone']);
-                $s->bindParam('address', $post['address']);
-                $s->bindValue('total_price', $total_price_update);
-                $s->bindParam('order_note', $post['order_note']);
-                $s->bindParam('payment_method', $post['payment_method']);
-                $s->bindParam('active', $post['active']);
-                $s->bindValue('updated_at', NV_CURRENTTIME);
-                if ($s->execute())
-                {
-                    //update bảng order_detail
-                    foreach($product_ids as $product_ids_key => $productId) {
-                        //
-                        $quantity = $product_quantities[$product_ids_key];
-                        $sql = "UPDATE `nv4_vi_book_order_detail` SET `quantity`=:quantity WHERE `order_id`=" . $post['id'] . " AND `product_id`=" . $productId;
-                        $s = $db->prepare($sql);
-                        $s->bindValue('quantity', $quantity);
-                        $s->execute();
-                        nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=orderlist&amp;success=1&amp;order_id=' . $post['id']);
-                            
+            try {
+                //update bảng orders
+            $sql = "UPDATE `nv4_vi_book_orders` SET `name`=:name,`email`=:email,`phone`=:phone,`address`=:address,`total_price`=:total_price,`order_note`=:order_note,`payment_method`=:payment_method, `active`=:active WHERE `id`=" . $post['id'];
+            $s = $db->prepare($sql);
+            $s->bindParam('name', $post['name']);
+            $s->bindParam('email', $post['email']);
+            $s->bindParam('phone', $post['phone']);
+            $s->bindParam('address', $post['address']);
+            $s->bindValue('total_price', $total_price_update);
+            $s->bindParam('order_note', $post['order_note']);
+            $s->bindParam('payment_method', $post['payment_method']);
+            $s->bindParam('active', $post['active']);
+            
+            if ($s->execute())
+            {
+                //update bảng order_detail
+                foreach($product_ids as $product_ids_key => $productId) {
+                    //
+                    $quantity = $product_quantities[$product_ids_key];
+                    
+                    $sql = "UPDATE `nv4_vi_book_order_detail` SET `quantity`=:quantity WHERE `order_id`=" . $post['id'] . " AND `product_id`=" . $productId;
+                    $s = $db->prepare($sql);
+                    $s->bindValue('quantity', $quantity);
+                    $s->execute();
+                    
                         
-                    }
-                    $alert = 'Sửa Thành công';
+                    
+                    
+                        
+                    
                 }
+                $alert = 'Sửa Thành công';
+                nv_redirect_location(NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=orderlist&amp;success=1&amp;order_id=' . $post['id']);
+            }
+            } catch (PDOException $e) {
+                echo "<pre>";
+                print_r($e);
+                echo "</pre>";
+            }
+            
                 
                 
         }
